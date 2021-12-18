@@ -19,7 +19,7 @@ public class Main {
 		System.out.println("Codice Fiscale : "+antonioUtente.getCodiceFiscale());
 		System.out.println("Data           : "+antonioUtente.getDatadinascita().getGiorno()+"/"+antonioUtente.getDatadinascita().getMese()+"/"+antonioUtente.getDatadinascita().getAnno());
 		System.out.println("Sistema di Configurazione Domande Primitivo EVO 1.1");
-		System.out.println("Prova Commit");
+		
 	
 	}
 	
