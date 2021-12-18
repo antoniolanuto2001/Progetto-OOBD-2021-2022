@@ -9,30 +9,26 @@ public class Quiz
 	public ArrayList <Domanda> Domande;
 	
 	
-	public Quiz() {
+	public Quiz(Test t) {
 		// TODO Auto-generated constructor stub
+		testAppartenza=t;
 	}
-	
-	public void QuizconParamentri(Test t,int P,int N,Domanda dom,String tipo)
+	public void ResetStats() 
 	{
-		Domande.add(dom);
+		Positivopunteggio=0;
+		Negativopunteggio=0;
+		setTipologiaTest("");
+	}
+	public void NuovoQuizParametri(int P,int N,String tipo)
+	{
 		Positivopunteggio=P;
 		Negativopunteggio=N;
-		testAppartenza=t;
-		TipologiaTest=tipo;
+		setTipologiaTest(tipo);
 	}
 	
 	public void AggiungiDomanda(Domanda dom)
 	{
 		Domande.add(dom);
-	}
-	public int getNegativopunteggio() 
-	{
-		return Negativopunteggio;
-	}	
-	public int getPositivopunteggio() 
-	{
-		return Positivopunteggio;
 	}
 	public String getTipologiaTest()
 	{
