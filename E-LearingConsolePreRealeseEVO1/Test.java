@@ -13,10 +13,11 @@ public class Test
 		// TODO Auto-generated constructor stub
 		setNomeTest(nome);
 		OwenerUtente=utente;
+		QuizPresenti =new ArrayList<Quiz>();
 	}
 	
 	
-	public boolean AddTest(Quiz Funzione)
+	public boolean AddQuiz(Quiz Funzione)
 	{
 		Boolean check;
 		check=QuizPresenti.add(Funzione);

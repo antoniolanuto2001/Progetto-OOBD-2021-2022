@@ -12,6 +12,10 @@ public class Quiz
 	public Quiz(Test t) {
 		// TODO Auto-generated constructor stub
 		testAppartenza=t;
+		Positivopunteggio=0;
+		Negativopunteggio=0;
+		setTipologiaTest("");
+		Domande = new ArrayList<Domanda>();
 	}
 	public void ResetStats() 
 	{
@@ -19,7 +23,7 @@ public class Quiz
 		Negativopunteggio=0;
 		setTipologiaTest("");
 	}
-	public void NuovoQuizParametri(int P,int N,String tipo)
+	public void AddParametri(int P,int N,String tipo)
 	{
 		Positivopunteggio=P;
 		Negativopunteggio=N;
