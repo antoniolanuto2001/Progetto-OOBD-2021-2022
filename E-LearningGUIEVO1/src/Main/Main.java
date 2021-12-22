@@ -22,6 +22,14 @@ import java.awt.SystemColor;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Label;
+
+import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
+import javax.swing.DropMode;
+
 public class Main {
 
 	private JFrame frame;
@@ -69,38 +77,50 @@ public class Main {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(37, 51, 408, 205);
+		panel_3.setBounds(37, 51, 408, 271);
 		LoginLeft.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel BenvenutoLogin = new JLabel("Login");
 		BenvenutoLogin.setBackground(Color.WHITE);
 		BenvenutoLogin.setVerticalAlignment(SwingConstants.TOP);
-		BenvenutoLogin.setBounds(36, 152, 205, 41);
+		BenvenutoLogin.setBounds(37, 192, 319, 41);
 		panel_3.add(BenvenutoLogin);
 		BenvenutoLogin.setFont(new Font("Segoe UI Semibold", Font.BOLD, 30));
 		
 		JLabel lblNewLabel = new JLabel("PassaParola E-learning");
 		lblNewLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
-		lblNewLabel.setBounds(84, 36, 242, 45);
+		lblNewLabel.setBounds(87, 11, 242, 45);
 		panel_3.add(lblNewLabel);
+		
+		JLabel AccountLabel = new JLabel("");
+		AccountLabel.setBounds(147, 67, 100, 100);
+		panel_3.add(AccountLabel);
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/iconaAccount4.png"));
+		AccountLabel.setIcon(imgAccopuIcon);
+		
+		JLabel lblNewLabel_1 = new JLabel("Portale d'accesso alla piattoforma  di Quiz!");
+		lblNewLabel_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(37, 226, 319, 34);
+		panel_3.add(lblNewLabel_1);
 		
 		JPanel panel_3_1 = new JPanel();
 		panel_3_1.setBackground(Color.WHITE);
 		panel_3_1.setLayout(null);
-		panel_3_1.setBounds(37, 288, 408, 418);
+		panel_3_1.setBounds(37, 321, 408, 385);
 		LoginLeft.add(panel_3_1);
 		
 		JButton ButtonLogin = new JButton("Login");
 		ButtonLogin.setBackground(new Color(102, 0, 255));
 		ButtonLogin.setForeground(new Color(255, 255, 255));
 		ButtonLogin.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		ButtonLogin.setBounds(93, 321, 214, 33);
+		ButtonLogin.setBounds(95, 244, 214, 33);
 		panel_3_1.add(ButtonLogin);
 		
 		JLabel EmailLabel = new JLabel("Email*");
 		EmailLabel.setFont(new Font("Calibri", Font.BOLD, 17));
-		EmailLabel.setBounds(38, 41, 168, 28);
+		EmailLabel.setBounds(38, 34, 168, 28);
 		panel_3_1.add(EmailLabel);
 		
 		EmailText = new JTextField();
@@ -124,5 +144,17 @@ public class Main {
 		LoginRight.setBackground(new Color(102, 0, 255));
 		LoginRight.setBounds(482, 0, 582, 761);
 		frame.getContentPane().add(LoginRight);
+		LoginRight.setLayout(null);
+		
+		JLabel ProgrammaerLabel = new JLabel("");
+		ProgrammaerLabel.setBounds(-63, 172, 660, 453);
+		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/ImagePrincipal2.png"));
+		LoginRight.add(ProgrammaerLabel);
+		ProgrammaerLabel.setIcon(imgAccopuIcon2);
+		
+		
+		
+		
+		
 	}
 }
