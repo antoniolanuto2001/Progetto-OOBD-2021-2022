@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,23 +16,28 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Controller;
+import javax.swing.JTextField;
 
-public class StudenteGUI extends JFrame {
+public class CreaQuizGui extends JFrame {
 
-	private JFrame frame;
 	private JPanel contentPane;
+	private JFrame frame;
 	private Controller controller;
-
-	
+	private JTextField NomeTest;
+	private JTextField NumeroTest;
+	public String CodiceFiscale;
+	/**
+	 * Launch the application.
+	 */
 
 	/**
 	 * Create the frame.
 	 */
-	public StudenteGUI(Controller c,JFrame frameChiamante) 
-	{
-		
+	public CreaQuizGui(Controller c,JFrame frameChiamante,String codiceString) 
+{
 		frame=this;
-		controller=c;
+		CodiceFiscale=codiceString;
+		//TODO Da implementare La corrispondeza tra codice fiscale ed autore del test
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 800);
 		contentPane = new JPanel();
@@ -46,10 +50,9 @@ public class StudenteGUI extends JFrame {
 		panel.setBounds(0, 0, 1064, 124);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("GUI Studente");
+		JLabel lblNewLabel = new JLabel("Crea Quiz");
 		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
-		lblNewLabel.setBounds(456, 27, 140, 57);
+		lblNewLabel.setBounds(470, 27, 140, 57);
 		panel.add(lblNewLabel);
 		
 		JButton IndietroButton = new JButton("Indietro");
@@ -60,22 +63,38 @@ public class StudenteGUI extends JFrame {
 		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/backIcona.png"));
 		IndietroButton.setIcon(imgAccopuIcon);
 		
-		JLabel NomeLabel = new JLabel("Nome");
-		NomeLabel.setForeground(Color.WHITE);
-		NomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		NomeLabel.setBounds(70, 27, 97, 24);
-		panel.add(NomeLabel);
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(0, 125, 1064, 636);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 		
-		JLabel CognomeLabel = new JLabel("Cognome");
-		CognomeLabel.setForeground(Color.WHITE);
-		CognomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		CognomeLabel.setBounds(127, 27, 129, 24);
-		panel.add(CognomeLabel);
+		JLabel InformazioniLabel = new JLabel("Informazioni Preliminari");
+		InformazioniLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		InformazioniLabel.setBounds(425, 11, 180, 56);
+		panel_1.add(InformazioniLabel);
 		
-		JLabel Studente = new JLabel("Studente");
-		Studente.setForeground(Color.WHITE);
-		Studente.setBounds(70, 46, 106, 24);
-		panel.add(Studente);
+		JLabel NomeLabel = new JLabel("Nome Test");
+		NomeLabel.setBounds(324, 77, 69, 22);
+		panel_1.add(NomeLabel);
+		
+		JLabel NumeroLabel = new JLabel("Numero Test");
+		NumeroLabel.setBounds(324, 121, 69, 22);
+		panel_1.add(NumeroLabel);
+		
+		
+		
+		NomeTest = new JTextField();
+		NomeTest.setBounds(403, 121, 207, 22);
+		panel_1.add(NomeTest);
+		NomeTest.setColumns(10);
+		
+		NumeroTest = new JTextField();
+		NumeroTest.setBounds(403, 78, 208, 20);
+		panel_1.add(NumeroTest);
+		NumeroTest.setColumns(10);
+		//TODO creare Form JPanel Automatici per tot domande
+		
 		IndietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -84,19 +103,5 @@ public class StudenteGUI extends JFrame {
 				frame.dispose();
 			}
 		});
-		ArrayList utenteArrayList = new ArrayList();
-		//TODO al posto del index 0 ci vuole index giusto per estrarre utente giusto
-		utenteArrayList = controller.getUtente(0);
-		NomeLabel.setText((String) utenteArrayList.get(0));
-		CognomeLabel.setText((String) utenteArrayList.get(1));
-		
-		JLabel AccountLabel2 = new JLabel("");
-		AccountLabel2.setBounds(10, 26, 50, 57);
-		panel.add(AccountLabel2);
-		ImageIcon imgAccopuIcon3 = new ImageIcon(this.getClass().getResource("/iconaAccount6.png"));
-		AccountLabel2.setIcon(imgAccopuIcon3);
-		
-	}
-	
-
+}
 }

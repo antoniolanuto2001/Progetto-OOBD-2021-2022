@@ -42,6 +42,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					System.out.println("Borsa Bozza Pre EVO 2");	
 					Controller controllerPrincipaleController= new Controller();
 					Login login= new Login(controllerPrincipaleController);
 				} 

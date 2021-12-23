@@ -205,12 +205,15 @@ public class Login extends JFrame {
 				String passwordString=passwordField.getText();
 				if ((emailString.contentEquals("an.lanuto@studenti.unina.it")&&passwordString.contentEquals("prova"))||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))) 
 				{
-					JFrame frameInsegnante=new InsegnanteGUI(controller,frame);
+					controller.aggiungiUtente("Antonio", "Lanuto", 29, 9, 2001, "LNTntN01p29f839r");
+					//TODO Aggiunta Manuale Da fare Dinamica Con query da Database
+					JFrame frameInsegnante=new InsegnanteGUI(controller,frame,emailString);
 					frame.setVisible(false);
 					frameInsegnante.setVisible(true);	
 				}
 				else if ((emailString.contentEquals("marco.pastore6@studenti.unina.it")&&passwordString.contentEquals("cammarota"))) 
 				{
+					controller.aggiungiUtente("Marco", "Pastore", 6, 8, 2001, " PSTMRC01M06F839K");
 					JFrame frameStudente=new StudenteGUI(controller,frame);
 					frame.setVisible(false);
 					frameStudente.setVisible(true);
