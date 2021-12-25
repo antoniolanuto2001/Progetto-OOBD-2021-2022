@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +18,14 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.Controller;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class CreaQuizGui extends JFrame {
 
@@ -25,7 +34,7 @@ public class CreaQuizGui extends JFrame {
 	private Controller controller;
 	private JTextField NomeTest;
 	private JTextField NumeroTest;
-	public String CodiceFiscale;
+	public String CodiceFiscale;	
 	/**
 	 * Launch the application.
 	 */
@@ -33,11 +42,14 @@ public class CreaQuizGui extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	public Integer NumeroRisposte ;
 	public CreaQuizGui(Controller c,JFrame frameChiamante,String codiceString) 
 {
+
 		frame=this;
 		CodiceFiscale=codiceString;
 		//TODO Da implementare La corrispondeza tra codice fiscale ed autore del test
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 800);
 		contentPane = new JPanel();
@@ -70,30 +82,36 @@ public class CreaQuizGui extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel InformazioniLabel = new JLabel("Informazioni Preliminari");
-		InformazioniLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
-		InformazioniLabel.setBounds(425, 11, 180, 56);
+		InformazioniLabel.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		InformazioniLabel.setBounds(396, 11, 258, 56);
 		panel_1.add(InformazioniLabel);
 		
 		JLabel NomeLabel = new JLabel("Nome Test");
-		NomeLabel.setBounds(324, 77, 69, 22);
+		NomeLabel.setFont(new Font("Source Code Pro", Font.BOLD, 11));
+		NomeLabel.setBounds(291, 77, 69, 22);
 		panel_1.add(NomeLabel);
 		
-		JLabel NumeroLabel = new JLabel("Numero Test");
-		NumeroLabel.setBounds(324, 121, 69, 22);
+		JLabel NumeroLabel = new JLabel("Numero Di Quiz");
+		NumeroLabel.setFont(new Font("Source Code Pro", Font.BOLD, 11));
+		NumeroLabel.setBounds(261, 121, 112, 22);
 		panel_1.add(NumeroLabel);
 		
 		
 		
 		NomeTest = new JTextField();
-		NomeTest.setBounds(403, 121, 207, 22);
+		NomeTest.setBounds(383, 121, 309, 22);
 		panel_1.add(NomeTest);
 		NomeTest.setColumns(10);
 		
 		NumeroTest = new JTextField();
-		NumeroTest.setBounds(403, 78, 208, 20);
+		NumeroTest.setBounds(383, 78, 309, 20);
 		panel_1.add(NumeroTest);
 		NumeroTest.setColumns(10);
-		//TODO creare Form JPanel Automatici per tot domande
+	
+		panel_1.add(new PanelFormDomande());
+		panel_1.repaint();
+		panel_1.revalidate();
+		
 		
 		IndietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 

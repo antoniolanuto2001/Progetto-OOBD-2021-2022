@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Controller;
@@ -25,6 +26,9 @@ public class InsegnanteGUI extends JFrame {
 	private JPanel contentPane;
 	private Controller controller;
 	private String emailricostruenteString;
+	public JLabel[] labels=new JLabel[100];
+	public JTextField MultiplaRisposta[] = new JTextField[100];
+	
 	/**
 	 * Launch the application.
 	 */
@@ -131,5 +135,6 @@ public class InsegnanteGUI extends JFrame {
 		NuovoQuiz.setMaximumSize(new Dimension(103, 23));
 		NuovoQuiz.setForeground(Color.BLACK);
 		NuovoQuiz.setFont(new Font("Source Code Pro", Font.BOLD, 14));
+
 	}
 }

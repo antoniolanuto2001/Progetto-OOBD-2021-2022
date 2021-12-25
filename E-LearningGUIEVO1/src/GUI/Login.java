@@ -203,7 +203,7 @@ public class Login extends JFrame {
 				//TODO Metodo al solo scopo di Debug Per implementazione Finale Connessione e metodo esterno DB
 				String emailString=EmailText.getText();
 				String passwordString=passwordField.getText();
-				if ((emailString.contentEquals("an.lanuto@studenti.unina.it")&&passwordString.contentEquals("prova"))||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))) 
+				if ((emailString.contentEquals("an.lanuto@studenti.unina.it")&&passwordString.contentEquals("prova"))||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))||(emailString.contentEquals("c")&&passwordString.contentEquals("c"))) 
 				{
 					controller.aggiungiUtente("Antonio", "Lanuto", 29, 9, 2001, "LNTntN01p29f839r");
 					//TODO Aggiunta Manuale Da fare Dinamica Con query da Database
