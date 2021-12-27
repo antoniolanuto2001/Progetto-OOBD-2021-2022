@@ -2,6 +2,8 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,10 +24,19 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.DimensionUIResource;
+
+import com.ibm.icu.impl.number.parse.ParsedNumber;
+
 import javax.swing.event.ChangeEvent;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JScrollBar;
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
 
 public class CreaQuizGui extends JFrame {
 
@@ -34,7 +45,9 @@ public class CreaQuizGui extends JFrame {
 	private Controller controller;
 	private JTextField NomeTest;
 	private JTextField NumeroTest;
+	public int posizioneY;
 	public String CodiceFiscale;	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,6 +61,7 @@ public class CreaQuizGui extends JFrame {
 
 		frame=this;
 		CodiceFiscale=codiceString;
+		posizioneY=20;
 		//TODO Da implementare La corrispondeza tra codice fiscale ed autore del test
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +91,7 @@ public class CreaQuizGui extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(0, 125, 1064, 636);
+		panel_1.setBounds(0, 114, 1064, 636);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -107,11 +121,53 @@ public class CreaQuizGui extends JFrame {
 		NumeroTest.setBounds(383, 78, 309, 20);
 		panel_1.add(NumeroTest);
 		NumeroTest.setColumns(10);
-	
-		panel_1.add(new PanelFormDomande());
-		panel_1.repaint();
-		panel_1.revalidate();
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setToolTipText("sonoquituamadre");
+		scrollPane.setBounds(60, 154, 962, 471);
+		
+		JPanel PanelDoveStannoQuiz = new JPanel();
+		PanelDoveStannoQuiz.setBackground(new Color(51, 102, 255));
+		PanelDoveStannoQuiz.setBounds(60, 154, 962, 471);
+		PanelDoveStannoQuiz.setLayout(null);
+		
+		PanelFormDomande QuizArray[]= new PanelFormDomande[1000];
+		NomeTest.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) 
+			{
+				PanelDoveStannoQuiz.removeAll();
+				posizioneY=20;
+				String str=NomeTest.getText();
+				if(!str.equals(""))
+				{	
+					int num=Integer.parseInt(str);
+					System.out.println("Numero Letto "+num);
+					for (int i = 0; i < num; i++) 
+					{
+						QuizArray[i]=new PanelFormDomande(i+1);
+						QuizArray[i].setLocation(273, posizioneY);
+						posizioneY=posizioneY+490;
+						PanelDoveStannoQuiz.add(QuizArray[i]);
+					}
+					PanelDoveStannoQuiz.setPreferredSize(new Dimension(962, 490*num));
+				    scrollPane.setPreferredSize(new Dimension(962, 500*num));
+					PanelDoveStannoQuiz.revalidate();
+					PanelDoveStannoQuiz.repaint();
+					scrollPane.revalidate();
+					scrollPane.repaint();
+				}
+				
+			    
+				
+			}
+		});
+	    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    PanelDoveStannoQuiz.setPreferredSize(new Dimension(962, 5000));
+	    scrollPane.setPreferredSize(new Dimension(962, 5000));
+	    scrollPane.setViewportView(PanelDoveStannoQuiz);	
+	    panel_1.add(scrollPane);
+			
 		
 		IndietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 

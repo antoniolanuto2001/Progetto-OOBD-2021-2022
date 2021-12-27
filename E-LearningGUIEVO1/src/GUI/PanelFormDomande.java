@@ -18,50 +18,50 @@ public class PanelFormDomande extends JPanel
 {
 	private JTextField DomandaField;
 	private JTextField RispostaField;
-	private JPanel PanelForm;
 	private int NumeroRispostePrecedenti;
 	private int aggiorna;
 	private int NumeroRisposte;
+	private int numeroquiz;
 	public JLabel[] labels=new JLabel[100];
 	public JTextField MultiplaRisposta[] = new JTextField[100];
 	
 	
-	public PanelFormDomande() 
+	public PanelFormDomande(int numero) 
 	{
 		aggiorna=10;
-		PanelForm = new JPanel();
-		PanelForm.setBounds(273, 184, 434, 441);
+		numeroquiz=numero;
+		setBounds(273, 184, 434, 441);
 		
-		PanelForm.setLayout(null);
+		setLayout(null);
 		
-		JLabel NumeroQuizLabel = new JLabel("Quiz : null");
+		JLabel NumeroQuizLabel = new JLabel("Quiz Numero : "+numeroquiz);
 		NumeroQuizLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		NumeroQuizLabel.setBounds(10, 11, 80, 20);
-		PanelForm.add(NumeroQuizLabel);
+		NumeroQuizLabel.setBounds(10, 11, 180, 20);
+		add(NumeroQuizLabel);
 		
 		DomandaField = new JTextField();
 		DomandaField.setBounds(71, 48, 335, 31);
-		PanelForm.add(DomandaField);
+		add(DomandaField);
 		DomandaField.setColumns(10);
 		
 		JLabel DomandaLabel = new JLabel("Domanda");
 		DomandaLabel.setFont(new Font("Source Code Pro", Font.BOLD, 11));
 		DomandaLabel.setBounds(10, 53, 66, 20);
-		PanelForm.add(DomandaLabel);
+		add(DomandaLabel);
 		
 		JCheckBox RispostaMCheckBox = new JCheckBox("Risposta Multipla");
 		
 		RispostaMCheckBox.setBounds(10, 97, 111, 23);
-		PanelForm.add(RispostaMCheckBox);
+		add(RispostaMCheckBox);
 		
 		JLabel RispostaLabel = new JLabel("Risposta");
 		RispostaLabel.setFont(new Font("Source Code Pro", Font.BOLD, 11));
 		RispostaLabel.setBounds(10, 143, 66, 31);
-		PanelForm.add(RispostaLabel);
+		add(RispostaLabel);
 		
 		RispostaField = new JTextField();
 		RispostaField.setBounds(71, 143, 335, 31);
-		PanelForm.add(RispostaField);
+		add(RispostaField);
 		RispostaField.setColumns(10);
 		
 		SpinnerModel model1Model=new SpinnerNumberModel(1, 1, 100, 1);
@@ -69,11 +69,11 @@ public class PanelFormDomande extends JPanel
 		
 		QuanteMultipleSpinner.setEnabled(false);
 		QuanteMultipleSpinner.setBounds(121, 97, 36, 23);
-		PanelForm.add(QuanteMultipleSpinner);
+		add(QuanteMultipleSpinner);
 		
 		JPanel DomandePanel = new JPanel();
 		DomandePanel.setBounds(0, 197, 434, 233);
-		PanelForm.add(DomandePanel);
+		add(DomandePanel);
 		DomandePanel.setLayout(null);
 		
 		
