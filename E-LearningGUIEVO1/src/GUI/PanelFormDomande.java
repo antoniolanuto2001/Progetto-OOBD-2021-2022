@@ -3,11 +3,13 @@ package GUI;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -16,25 +18,27 @@ import javax.swing.event.ChangeListener;
 
 public class PanelFormDomande extends JPanel
 {
-	private JTextField DomandaField;
-	private JTextField RispostaField;
 	private int NumeroRispostePrecedenti;
 	private int aggiorna;
 	private int NumeroRisposte;
-	private int numeroquiz;
-	public JLabel[] labels=new JLabel[100];
-	public JTextField MultiplaRisposta[] = new JTextField[100];
-	
-	
+	public  int numeroquiz;
+	public JSpinner QuanteMultipleSpinner;
+	public JTextField DomandaField;
+	public JTextField RispostaField;
+	final public JLabel[] labels=new JLabel[100];
+	final public JTextField MultiplaRisposta[] = new JTextField[100];
+	public String modalitaDomanda;
+	public int tommaso;
 	public PanelFormDomande(int numero) 
 	{
 		aggiorna=10;
 		numeroquiz=numero;
+		modalitaDomanda="A";
 		setBounds(273, 184, 434, 441);
 		
 		setLayout(null);
 		
-		JLabel NumeroQuizLabel = new JLabel("Quiz Numero : "+numeroquiz);
+		JLabel NumeroQuizLabel = new JLabel("Quiz Numero : "+ (numeroquiz+1));
 		NumeroQuizLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		NumeroQuizLabel.setBounds(10, 11, 180, 20);
 		add(NumeroQuizLabel);
@@ -65,7 +69,7 @@ public class PanelFormDomande extends JPanel
 		RispostaField.setColumns(10);
 		
 		SpinnerModel model1Model=new SpinnerNumberModel(1, 1, 100, 1);
-		JSpinner QuanteMultipleSpinner = new JSpinner(model1Model);
+		QuanteMultipleSpinner = new JSpinner(model1Model);
 		
 		QuanteMultipleSpinner.setEnabled(false);
 		QuanteMultipleSpinner.setBounds(121, 97, 36, 23);
@@ -84,6 +88,7 @@ public class PanelFormDomande extends JPanel
 			
 				if (RispostaMCheckBox.isSelected()) 
 				{
+					modalitaDomanda="M";
 					QuanteMultipleSpinner.setEnabled(true);
 					NumeroRisposte=(Integer)QuanteMultipleSpinner.getValue();
 					char lettera='A';  
@@ -97,7 +102,13 @@ public class PanelFormDomande extends JPanel
 			            labels[i].setFont(new Font("Source Code Pro", Font.BOLD, 11));
 			            labels[i].setBounds(33, aggiorna, 48, 31);
 			            MultiplaRisposta[i] = new JTextField();
-			            MultiplaRisposta[i].setColumns(10);
+			            MultiplaRisposta[i].addActionListener(new ActionListener() {
+			                @Override
+			                public void actionPerformed(ActionEvent evt) {
+			                    System.out.println(MultiplaRisposta[tommaso].getText());
+			                }
+			            });
+			            MultiplaRisposta[i].setColumns(1);
 			    		MultiplaRisposta[i].setBounds(71, aggiorna, 335, 31);
 			            aggiorna=aggiorna+40;
 			        }
@@ -115,7 +126,7 @@ public class PanelFormDomande extends JPanel
 				}
 				else 
 				{
-					
+					modalitaDomanda="A";
 					QuanteMultipleSpinner.setEnabled(false);
 					System.out.print(NumeroRisposte);
 					DomandePanel.removeAll();
@@ -131,8 +142,7 @@ public class PanelFormDomande extends JPanel
 			}
 		});
 		//TODO creare Form JPanel Automatici per tot domande
-		
-	
+			
 		QuanteMultipleSpinner.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{	
@@ -151,6 +161,7 @@ public class PanelFormDomande extends JPanel
 							char lettera='A';  
 							String letteraString=String.valueOf(lettera);  
 							int aggiorna=10;
+							DomandePanel.removeAll();
 					        for (int i=0;i<NumeroRisposte;i++)
 					        {
 					            labels[i]=new JLabel(letteraString);
@@ -159,7 +170,14 @@ public class PanelFormDomande extends JPanel
 					            labels[i].setFont(new Font("Source Code Pro", Font.BOLD, 11));
 					            labels[i].setBounds(33, aggiorna, 48, 31);
 					            MultiplaRisposta[i] = new JTextField();
-					            MultiplaRisposta[i].setColumns(10);
+					            tommaso=i;
+					            MultiplaRisposta[i].addActionListener(new ActionListener() {
+					                @Override
+					                public void actionPerformed(ActionEvent evt) {
+					                    System.out.println(MultiplaRisposta[tommaso].getText());
+					                }
+					            });
+					            MultiplaRisposta[i].setColumns(1);
 					    		MultiplaRisposta[i].setBounds(71, aggiorna, 335, 31);
 					            aggiorna=aggiorna+40;
 					        }
@@ -167,7 +185,8 @@ public class PanelFormDomande extends JPanel
 					        {
 					            DomandePanel.add(labels[i]);
 					            DomandePanel.add(MultiplaRisposta[i]);
-					            
+					            MultiplaRisposta[i].setEnabled(false);
+					            MultiplaRisposta[i].setEnabled(true);
 					        }
 					        DomandePanel.repaint();
 					        DomandePanel.revalidate();
@@ -189,14 +208,23 @@ public class PanelFormDomande extends JPanel
 					            labels[i].setFont(new Font("Source Code Pro", Font.BOLD, 11));
 					            labels[i].setBounds(33, aggiorna, 48, 31);
 					            MultiplaRisposta[i] = new JTextField();
-					            MultiplaRisposta[i].setColumns(10);
+					            MultiplaRisposta[i].addActionListener(new ActionListener() {
+					                @Override
+					                public void actionPerformed(ActionEvent evt) {
+					                    System.out.println(MultiplaRisposta[tommaso].getText());
+					                }
+					            });
+					            MultiplaRisposta[i].setColumns(1);
 					    		MultiplaRisposta[i].setBounds(71, aggiorna, 335, 31);
 					            aggiorna=aggiorna+40;
 					        }
 					        for (int i=0;i<NumeroRisposte;i++)
 					        {
+					        	
 					            DomandePanel.add(labels[i]);
 					            DomandePanel.add(MultiplaRisposta[i]);
+					            MultiplaRisposta[i].setEnabled(false);
+					            MultiplaRisposta[i].setEnabled(true);
 					            
 					        }
 					        

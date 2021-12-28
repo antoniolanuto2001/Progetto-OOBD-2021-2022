@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.eclipse.osgi.internal.debug.Debug;
+
 import Controller.Controller;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;

@@ -8,12 +8,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -43,8 +45,8 @@ public class CreaQuizGui extends JFrame {
 	private JPanel contentPane;
 	private JFrame frame;
 	private Controller controller;
+	private JTextField NumeroQuiz;
 	private JTextField NomeTest;
-	private JTextField NumeroTest;
 	public int posizioneY;
 	public String CodiceFiscale;	
 	
@@ -58,10 +60,11 @@ public class CreaQuizGui extends JFrame {
 	public Integer NumeroRisposte ;
 	public CreaQuizGui(Controller c,JFrame frameChiamante,String codiceString) 
 {
-
+		
 		frame=this;
 		CodiceFiscale=codiceString;
 		posizioneY=20;
+		controller=c;
 		//TODO Da implementare La corrispondeza tra codice fiscale ed autore del test
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,20 +115,20 @@ public class CreaQuizGui extends JFrame {
 		
 		
 		
+		NumeroQuiz = new JTextField();
+		NumeroQuiz.setBounds(383, 121, 309, 22);
+		panel_1.add(NumeroQuiz);
+		NumeroQuiz.setColumns(10);
+		
 		NomeTest = new JTextField();
-		NomeTest.setBounds(383, 121, 309, 22);
+		NomeTest.setBounds(383, 78, 309, 20);
 		panel_1.add(NomeTest);
 		NomeTest.setColumns(10);
-		
-		NumeroTest = new JTextField();
-		NumeroTest.setBounds(383, 78, 309, 20);
-		panel_1.add(NumeroTest);
-		NumeroTest.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setToolTipText("sonoquituamadre");
-		scrollPane.setBounds(60, 154, 962, 471);
+		scrollPane.setBounds(60, 190, 962, 471);
 		
 		JPanel PanelDoveStannoQuiz = new JPanel();
 		PanelDoveStannoQuiz.setBackground(new Color(51, 102, 255));
@@ -133,19 +136,19 @@ public class CreaQuizGui extends JFrame {
 		PanelDoveStannoQuiz.setLayout(null);
 		
 		PanelFormDomande QuizArray[]= new PanelFormDomande[1000];
-		NomeTest.addCaretListener(new CaretListener() {
+		NumeroQuiz.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) 
 			{
 				PanelDoveStannoQuiz.removeAll();
 				posizioneY=20;
-				String str=NomeTest.getText();
+				String str=NumeroQuiz.getText();
 				if(!str.equals(""))
 				{	
 					int num=Integer.parseInt(str);
 					System.out.println("Numero Letto "+num);
 					for (int i = 0; i < num; i++) 
 					{
-						QuizArray[i]=new PanelFormDomande(i+1);
+						QuizArray[i]=new PanelFormDomande(i);
 						QuizArray[i].setLocation(273, posizioneY);
 						posizioneY=posizioneY+490;
 						PanelDoveStannoQuiz.add(QuizArray[i]);
@@ -167,6 +170,58 @@ public class CreaQuizGui extends JFrame {
 	    scrollPane.setPreferredSize(new Dimension(962, 5000));
 	    scrollPane.setViewportView(PanelDoveStannoQuiz);	
 	    panel_1.add(scrollPane);
+	    
+	    JButton SubmitButton = new JButton("Invio Quiz");
+	    SubmitButton.addActionListener(new ActionListener() 
+	    {
+	    	public void actionPerformed(ActionEvent e) 
+	    	{
+	    		String str=NumeroQuiz.getText();
+	    		String str2=NomeTest.getText();
+	    		if(!str.equals("")&&!str2.equals(""))
+	    		{
+	    			int num=Integer.parseInt(str);
+	    			controller.aggiungiTest(NomeTest.getText(), codiceString);
+	    			System.out.println("Inizio Procedura InvioController");
+	    			for (int i = 0; i < num; i++) 
+					{
+	    				controller.addQuizToTest(0, 0, QuizArray[i].modalitaDomanda);
+	    				if(QuizArray[i].modalitaDomanda.contentEquals("M"))
+	    				{
+	    					int NumeroRisposteMesse=(Integer)QuizArray[i].QuanteMultipleSpinner.getValue();
+	    					String domandaString=QuizArray[i].DomandaField.getText();
+							String testoString=QuizArray[i].RispostaField.getText();
+							controller.addDomanda(domandaString,testoString);
+	    					for (int j = 0; j < NumeroRisposteMesse; j++) 
+	    					{
+	    						 domandaString=QuizArray[i].labels[j].getText();
+								 testoString=QuizArray[i].MultiplaRisposta[j].getText();
+								 controller.addDomanda(domandaString,testoString);
+	    					}
+	    				}
+	    				else if(QuizArray[i].modalitaDomanda.contentEquals("A")) 
+	    				{
+	    					String domandaString=QuizArray[i].DomandaField.getText();
+							String testoString=QuizArray[i].RispostaField.getText();
+							controller.addDomanda(domandaString,testoString);
+						}
+	    				else {
+	    					System.out.println("C é un errore Tommaso");
+						}
+					}
+	    			System.out.println("Procedura finita Tutto OK");
+	    			controller.Debug();
+	    			JOptionPane.showMessageDialog(null,"Quiz Eseguito","Conferma Quiz",JOptionPane.INFORMATION_MESSAGE);
+	    			frameChiamante.setVisible(true);
+					frame.setVisible(false);
+					frame.dispose();
+					
+	    		}
+	    		
+	    	}
+	    });
+	    SubmitButton.setBounds(454, 154, 126, 23);
+	    panel_1.add(SubmitButton);
 			
 		
 		IndietroButton.addActionListener(new ActionListener() {
@@ -175,6 +230,7 @@ public class CreaQuizGui extends JFrame {
 				frameChiamante.setVisible(true);
 				frame.setVisible(false);
 				frame.dispose();
+				controller.Debug();
 			}
 		});
 }

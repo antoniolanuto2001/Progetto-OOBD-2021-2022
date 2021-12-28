@@ -211,7 +211,7 @@ public class Login extends JFrame {
 					frame.setVisible(false);
 					frameInsegnante.setVisible(true);	
 				}
-				else if ((emailString.contentEquals("marco.pastore6@studenti.unina.it")&&passwordString.contentEquals("cammarota"))) 
+				else if ((emailString.contentEquals("marco.pastore6@studenti.unina.it")&&passwordString.contentEquals("cammarota"))||(emailString.contentEquals("a")&&passwordString.contentEquals("a"))) 
 				{
 					controller.aggiungiUtente("Marco", "Pastore", 6, 8, 2001, " PSTMRC01M06F839K");
 					JFrame frameStudente=new StudenteGUI(controller,frame);
