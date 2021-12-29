@@ -127,7 +127,6 @@ public class CreaQuizGui extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setToolTipText("sonoquituamadre");
 		scrollPane.setBounds(60, 190, 962, 471);
 		
 		JPanel PanelDoveStannoQuiz = new JPanel();

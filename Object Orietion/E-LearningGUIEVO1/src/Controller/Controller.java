@@ -76,6 +76,19 @@ public class Controller
 			System.out.println("Risposta: "+ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Riposta);
 		}
 	}
+	public int SizeTestArrayList()
+	{
+		int size=ListaTest.size();
+		return size;
+	}
+	public ArrayList getTestArrayList(int index)
+	{
+		ArrayList a = new ArrayList();
+		a.add(ListaTest.get(index).getNomeTest());
+		a.add(ListaTest.get(index).OwenerUtente.getNome());
+		a.add(ListaTest.get(index).OwenerUtente.getCognome());
+		return a;
+	}
 	public ArrayList getUtente(int index) 
 	{
 		//TODO al posto di 0 ci andrebbe index
