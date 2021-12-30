@@ -102,5 +102,22 @@ public class Controller
 		a.add(ListaUtenti.get(0).getDatadinascita().getAnno());
 		return a;
 	}
-	
+    public int returnIndexListaTest(String n,String u)
+    {
+    	int a=-1;
+    	for (int i = 0; i < ListaTest.size(); i++) 
+    	{
+    		if (ListaTest.get(i).OwenerUtente.getNome().contentEquals(u)&&ListaTest.get(i).getNomeTest().contentEquals(n))
+    		{
+    			a=i;
+    			return a;
+    		}
+		}
+    	return a;
+    }
+	public Test ReturnCopiaOfTest(int Index) throws CloneNotSupportedException
+	{
+		Test nuovoTest= (Test) ListaTest.get(Index).clone();
+		return nuovoTest;
+	}
 }

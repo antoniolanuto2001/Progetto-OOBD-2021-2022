@@ -125,6 +125,7 @@ public class StudenteGUI extends JFrame {
 				testArrayList = controller.getTestArrayList(i);
 				NumeroTest[i].NomeTest.setText("<html><div style='text-align: center;'>"+(String) testArrayList.get(0)+"</div></html>");
 				NumeroTest[i].UtenteTest.setText("<html><div style='text-align: center;'>"+(String) testArrayList.get(1)+"  "+testArrayList.get(2)+"</div></html>");				
+				NumeroTest[i].CollegamentoValori((String) testArrayList.get(0),(String) testArrayList.get(1));
 				NumeroTest[i].setLocation(PosizioneX, 59);
 				PosizioneX=PosizioneX+303;				
 				PanelQuizDisponibili.add(NumeroTest[i]);

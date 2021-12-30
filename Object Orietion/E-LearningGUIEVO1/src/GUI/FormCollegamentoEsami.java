@@ -20,6 +20,8 @@ public class FormCollegamentoEsami extends JPanel
 	private Controller controller;
 	public JLabel NomeTest;
 	public JLabel UtenteTest;
+	public String nomeTestPerCollegamentoString;
+	public String utentePerCollegamentoString ;
 	public FormCollegamentoEsami(Controller c,JFrame framecorrente) 
 	{
 		
@@ -80,10 +82,15 @@ public class FormCollegamentoEsami extends JPanel
 		InvioVersoTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				JFrame frameSvolgiQuiz=new SvolgiQuiz(controller,frame);
+				JFrame frameSvolgiQuiz=new SvolgiQuiz(controller,frame,nomeTestPerCollegamentoString,utentePerCollegamentoString);
 				frame.setVisible(false);
 				frameSvolgiQuiz.setVisible(true);
 			}
 		});
+	}
+	public void CollegamentoValori(String n,String u)
+	{
+		nomeTestPerCollegamentoString=n;
+		utentePerCollegamentoString=u;
 	}
 }
