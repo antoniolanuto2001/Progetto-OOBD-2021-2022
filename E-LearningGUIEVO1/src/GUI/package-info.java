@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author anton
- *
- */
-package GUI;
