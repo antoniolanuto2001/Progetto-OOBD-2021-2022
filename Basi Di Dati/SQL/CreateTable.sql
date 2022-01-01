@@ -76,4 +76,20 @@ CREATE TABLE INSEGNAMENTO
 	PRIMARY KEY(IdInsegnamento),
 	FOREIGN KEY(IdDocente) REFERENCES  DOCENTE(IdDocente)
 );
-
+/*
+    ---------------------------
+           !Table-TEST!
+    ---------------------------
+*/
+CREATE TABLE TEST
+(
+	IdTest SERIAL,
+	Nome VARCHAR(50),
+	LimiteTempo INT,
+	NumeroQuiz INT,
+	ScadenzaData DATE,
+	PropietarioTest VARCHAR(5),
+	
+	PRIMARY KEY(IdTest),
+	FOREIGN KEY(PropietarioTest) REFERENCES  DOCENTE(IdDocente)
+);
