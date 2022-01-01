@@ -6,6 +6,22 @@
 */
 /*
     ---------------------------
+        !Table-DIPARTIMENTO!
+    ---------------------------
+*/
+CREATE TABLE DIPARTIMENTO 
+(
+	CodiceStruttura VARCHAR(5),
+	Nome VARCHAR(40),
+	Direttore VARCHAR(40),
+	Citta VARCHAR(40),
+	provincia VARCHAR(40),
+	Via VARCHAR(40),
+	Cap INT,
+	PRIMARY KEY (CodiceStruttura)
+); 
+/*
+    ---------------------------
           !Table-STUDENTE!
     ---------------------------
 */
@@ -25,22 +41,7 @@ CREATE TABLE STUDENTE
 	PRIMARY KEY(Matricola),
 	FOREIGN KEY(Dipartimento) REFERENCES  DIPARTIMENTO(CodiceStruttura)
 ); 
-/*
-    ---------------------------
-        !Table-DIPARTIMENTO!
-    ---------------------------
-*/
-CREATE TABLE DIPARTIMENTO 
-(
-	CodiceStruttura VARCHAR(5),
-	Nome VARCHAR(40),
-	Direttore VARCHAR(40),
-	Citta VARCHAR(40),
-	provincia VARCHAR(40),
-	Via VARCHAR(40),
-	Cap INT,
-	PRIMARY KEY (CodiceStruttura)
-); 
+
 /*
     ---------------------------
           !Table-DOCENTE!
@@ -92,4 +93,140 @@ CREATE TABLE TEST
 	
 	PRIMARY KEY(IdTest),
 	FOREIGN KEY(PropietarioTest) REFERENCES  DOCENTE(IdDocente)
+);
+CREATE SEQUENCE TestId
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 99999
+OWNED BY TEST.IdTest;
+/*
+    ---------------------------
+          !Table-GESTIONE!
+    ---------------------------
+*/
+CREATE TABLE GESTIONE 
+(
+	IdOperazione SERIAL,
+	Operazione VARCHAR(30),
+	DataOperazione TIMESTAMP,
+	IdDocente VARCHAR(5),
+	IDTest INT,
+	
+	PRIMARY KEY(IdOperazione),
+	FOREIGN KEY(IdDocente) REFERENCES  DOCENTE(IdDocente),
+	FOREIGN KEY(IdTest) REFERENCES  TEST(IdTest)
+);
+CREATE SEQUENCE GestioneId
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 99999
+OWNED BY GESTIONE.IdOperazione;
+/*
+    ---------------------------
+        !Table-QUIZAPERTA!
+    ---------------------------
+*/
+CREATE TABLE QUIZAPERTA
+(
+	IdQuizA SERIAL,
+	Domanda VARCHAR(800),
+	Risposta VARCHAR(2000),
+	MaXLunghezzaRisposta INT,
+	PunteggioMinimo INT,
+	PunteggioMassimo INT,
+	IdtestRiferimento INT,
+	
+	PRIMARY KEY(IdQuizA),
+	FOREIGN KEY(IdtestRiferimento) REFERENCES  TEST(IdTest)
+);
+CREATE SEQUENCE IdQuizSeq
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 300000
+OWNED BY QUIZAPERTA.IdQuizA;
+/*
+    ---------------------------
+        !Table-QUIZMULTIPLA!
+    ---------------------------
+*/
+CREATE TABLE QUIZMULTIPLA
+(
+	IdQuizM SERIAL,
+	Domanda VARCHAR(800),
+	PunteggioRispostaCorretta INT,
+	PunteggioRispostaSbagliato INT,
+	IdtestRiferimento INT,
+	
+	PRIMARY KEY(IdQuizM),
+	FOREIGN KEY(IdtestRiferimento) REFERENCES TEST(IdTest)
+);
+CREATE SEQUENCE IdQuizMSeq
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 300000
+OWNED BY QUIZMULTIPLA.IdQuizM;
+/*
+    ---------------------------
+        !Table-RISPOSTA!
+    ---------------------------
+*/
+CREATE TABLE RISPOSTA
+(
+	IDRisposta SERIAL,
+	Risposta VARCHAR(200),
+	IDQuizRiferimento INT,
+	
+	PRIMARY KEY(IDRisposta) ,
+	FOREIGN KEY(IDQuizRiferimento) REFERENCES QUIZAPERTA(IdQuizA)
+);
+CREATE SEQUENCE IdRiSpostaSeq
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 300000
+OWNED BY RISPOSTA.IDRisposta;
+/*
+    ---------------------------
+    !Table-RISULTATITEST!
+    ---------------------------
+*/
+CREATE TABLE RISULTATITEST
+(
+	IdRisultato SERIAL,
+	NumeroQuiz INT,
+	IdTest INT,
+	Matricola VARCHAR(9),
+	PuteggioTotale INT,
+	
+	PRIMARY KEY(IdRisultato),
+	FOREIGN KEY(Matricola) REFERENCES STUDENTE(Matricola)
+);
+CREATE SEQUENCE IdRisulatatoSeq
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 300000
+OWNED BY RISULTATITEST.IdRisultato;
+/*
+    ---------------------------------
+    !Table-VALUTAZIONERISPOSTEAPERTE!
+    ---------------------------------
+*/
+CREATE TABLE VALUTAZIONERISPOSTEAPERTE
+(
+	IdQuizAperto INT,
+	IdDocente VARCHAR(5), 
+	IdTest INT,
+	IdRisultato INT,
+	PunteggioOttenuto INT,
+	DataValutazione TIMESTAMP,
+	
+	FOREIGN KEY (IdQuizAperto) REFERENCES QUIZAPERTA(IdQuizA),
+	FOREIGN KEY (IdDocente) REFERENCES DOCENTE(IdDocente),
+	FOREIGN KEY (IdTest) REFERENCES TEST(IdTest),
+	FOREIGN KEY (IdRisultato) REFERENCES RISULTATITEST(IdRisultato)
 );
