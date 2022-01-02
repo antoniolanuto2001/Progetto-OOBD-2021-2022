@@ -76,19 +76,6 @@ public class Controller
 			System.out.println("Risposta: "+ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Riposta);
 		}
 	}
-	public int SizeTestArrayList()
-	{
-		int size=ListaTest.size();
-		return size;
-	}
-	public ArrayList getTestArrayList(int index)
-	{
-		ArrayList a = new ArrayList();
-		a.add(ListaTest.get(index).getNomeTest());
-		a.add(ListaTest.get(index).OwenerUtente.getNome());
-		a.add(ListaTest.get(index).OwenerUtente.getCognome());
-		return a;
-	}
 	public ArrayList getUtente(int index) 
 	{
 		//TODO al posto di 0 ci andrebbe index
@@ -102,22 +89,5 @@ public class Controller
 		a.add(ListaUtenti.get(0).getDatadinascita().getAnno());
 		return a;
 	}
-    public int returnIndexListaTest(String n,String u)
-    {
-    	int a=-1;
-    	for (int i = 0; i < ListaTest.size(); i++) 
-    	{
-    		if (ListaTest.get(i).OwenerUtente.getNome().contentEquals(u)&&ListaTest.get(i).getNomeTest().contentEquals(n))
-    		{
-    			a=i;
-    			return a;
-    		}
-		}
-    	return a;
-    }
-	public Test ReturnCopiaOfTest(int Index) throws CloneNotSupportedException
-	{
-		Test nuovoTest= (Test) ListaTest.get(Index).clone();
-		return nuovoTest;
-	}
+	
 }

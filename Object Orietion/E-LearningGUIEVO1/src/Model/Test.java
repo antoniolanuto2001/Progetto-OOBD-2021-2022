@@ -1,7 +1,7 @@
 package Model;
 import java.util.*;
 
-public class Test implements Cloneable
+public class Test 
 {
 	
 	private String NomeTest;
@@ -30,9 +30,6 @@ public class Test implements Cloneable
 	public void setNomeTest(String nomeTest) {
 		NomeTest = nomeTest;
 	}
-	public Object clone() throws CloneNotSupportedException
-    {
-        return super.clone();
-    }
+	
 
 }
