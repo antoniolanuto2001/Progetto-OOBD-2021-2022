@@ -87,7 +87,7 @@ CREATE TABLE DOCENTE
 CREATE TABLE INSEGNAMENTO
 (
 	IdInsegnamento VARCHAR(5),
-	denominazione VARCHAR(40),
+	denominazione VARCHAR(80),
 	IdDocente VARCHAR(5),
 
 	PRIMARY KEY(IdInsegnamento),
@@ -101,7 +101,7 @@ CREATE TABLE INSEGNAMENTO
 CREATE TABLE TEST
 (
 	IdTest SERIAL,
-	Nome VARCHAR(50),
+	Nome VARCHAR(80),
 	LimiteTempo INT,
 	NumeroQuiz INT,
 	ScadenzaData DATE,
@@ -279,9 +279,9 @@ INSERT INTO dipartimento VALUES
 ('40132','Dipartimento di  Ingegneria Elettrica e delle Tecnologie dell Informazione','Prof. Fabio Villone','Napoli','Napoli','Via Claudio 21',80125);
 ('40555','Dipartimento di Matematica','Prof.ssa Cristina Trombetti','Napoli','Napoli','Via Cupa Nuova Cintia 21','80126');
 /*
-  ---------------------------------
-    !INSERT->TABLE->DOCENTE!
-  ---------------------------------
+	---------------------------------
+		!INSERT->TABLE->DOCENTE!
+	---------------------------------
 */
 INSERT INTO docente VALUES
 ('D1432','Silvia','Rossi','04/12/1987','RSSSLV87D52F839Q','F','081679963','https://www.docenti.unina.it/silvia.rossi','silvia.rossi@unina.it','dOCx8821!','40132'),
@@ -298,9 +298,9 @@ INSERT INTO docente VALUES
 ('D9442','Dario','Antonini','02/05/1980','NTNDRA80B05G902E','M','081679091','https://www.docenti.unina.it/dario.antonini','dario.antonini@unina.it','MERge2!@a','40142');
 
 /*
-  ---------------------------------
-    !INSERT->TABLE->STUDENTE!
-  ---------------------------------
+---------------------------------
+	!INSERT->TABLE->STUDENTE!
+---------------------------------
 */
 INSERT INTO studente VALUES
 ('N8600124','Filippo','Marziani','07/12/2000','FLPMZN00L12F839E','M','Architettura','f.marziani@studenti.unina.it','Melin01@','40124'),
@@ -318,9 +318,9 @@ INSERT INTO studente VALUES
 ('N86003313','Veronica','Innalzi','07/23/2001','NNLVNC01L63F839R','F','Ingegneria Biomedica','vero.innalzi@studenti.unina.it','Vero.Inn!221','40133');
 
 /*
-  ---------------------------------
-    !INSERT->TABLE->TEST!
-  ---------------------------------
+---------------------------------
+	!INSERT->TABLE->TEST!
+---------------------------------
 */
 INSERT INTO test VALUES
 (default,'Prova di Analisi I -Funzioni',120,10,'05/01/2022','D2442'),
@@ -356,9 +356,9 @@ INSERT INTO test VALUES
 (default,'Biologia Generale Primo Test',60,10,'02/15/2022','D9934');
 
 /*
-  ---------------------------------
-    !INSERT->TABLE->INSEGNAMENTO!
-  ---------------------------------
+---------------------------------
+	!INSERT->TABLE->INSEGNAMENTO!
+---------------------------------
 */
 INSERT INTO insegnamento VALUES
 ('24583','Citologia ed Istologia e Laboratorio','D9934'),
@@ -391,11 +391,10 @@ INSERT INTO insegnamento VALUES
 
 
 /*
-  ---------------------------------
-    !INSERT->TABLE->QUIZMULTIPLA!
-  ---------------------------------
+---------------------------------
+	!INSERT->TABLE->QUIZMULTIPLA!
+---------------------------------
 */
 INSERT INTO quizmultipla VALUES
 (default,'A cosa serve una Memoria Cache?',1,0,7),
 (default,'Come si ottengono prestazioni migliori con le Cache?',1,0,7);
-
