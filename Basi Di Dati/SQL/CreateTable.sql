@@ -5,14 +5,14 @@
         !Creazione Domini!
     ---------------------------
 */
-CREATE DOMAIN EMAIL_DOMINIO AS VARCHAR(50)
+CREATE DOMAIN EMAIL_DOMINIO AS VARCHAR(60)
 	CHECK ( VALUE LIKE '_%@_%._%' );
 
 CREATE DOMAIN PASSWORD_DOMINIO AS VARCHAR(40)
 	CHECK (VALUE ~ '^.*(?=.*[@!#$^*%&])(?=.*[0-9])(?=.*[a-zA-Z]).*$'
 		AND VALUE LIKE '________%');
 
-CREATE DOMAIN URL AS VARCHAR(50)
+CREATE DOMAIN URL AS VARCHAR(60)
 	CHECK ( VALUE LIKE 'https://www.%' );
 /*
     ---------------------------
@@ -44,8 +44,8 @@ CREATE TABLE DIPARTIMENTO
 CREATE TABLE STUDENTE
 (
 	Matricola VARCHAR(9),
-	Nome VARCHAR(50),
-	Cognome VARCHAR(50),
+	Nome VARCHAR(60),
+	Cognome VARCHAR(60),
 	DatadiNascita DATE,
 	CodFiscale VARCHAR(16),
 	Sesso VARCHAR(1),
@@ -65,8 +65,8 @@ CREATE TABLE STUDENTE
 CREATE TABLE DOCENTE
 (
 	IdDocente VARCHAR(5),
-	Nome VARCHAR(50),
-	Cognome VARCHAR(50),
+	Nome VARCHAR(60),
+	Cognome VARCHAR(60),
 	DataDiNascita DATE,
 	CodFiscale VARCHAR(16),
 	Sesso VARCHAR(1),
