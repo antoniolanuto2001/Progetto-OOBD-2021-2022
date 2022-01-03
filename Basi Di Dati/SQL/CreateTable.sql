@@ -275,8 +275,8 @@ INSERT INTO dipartimento VALUES
 ('40128','Dipartimento di Giurisprudenza','Prof. Sandro Staiano','Napoli','Napoli','Via Nuova Marina 33',80133),
 ('40133','Dipartimento di Ingegneria','Prof. Nicola Bianco','Napoli','Napoli','Piazzale Tecchio 80',80125),
 ('40137','Dipartimento di Medicina e Chirurgia','Prof. Fabrizio Pane','Napoli','Napoli','Via Pansini 5',80131),
-('40147','Dipartimento di Scienze Politiche','Prof. Vittorio Amato','Napoli','Napoli','Via Leopoldo Rodinò 22',80138);
-('40132','Dipartimento di  Ingegneria Elettrica e delle Tecnologie dell Informazione','Prof. Fabio Villone','Napoli','Napoli','Via Claudio 21',80125);
+('40147','Dipartimento di Scienze Politiche','Prof. Vittorio Amato','Napoli','Napoli','Via Leopoldo Rodinò 22',80138),
+('40132','Dipartimento di  Ingegneria Elettrica e delle Tecnologie dell Informazione','Prof. Fabio Villone','Napoli','Napoli','Via Claudio 21',80125),
 ('40555','Dipartimento di Matematica','Prof.ssa Cristina Trombetti','Napoli','Napoli','Via Cupa Nuova Cintia 21','80126');
 /*
 	---------------------------------
