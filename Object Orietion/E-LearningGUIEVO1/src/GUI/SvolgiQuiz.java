@@ -55,6 +55,8 @@ public class SvolgiQuiz extends JFrame {
 		frame=this;
 		controller=c;
 		PosizioneY=20;
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		frame.setIconImage(logo.getImage());
 		int index=controller.returnIndexListaTest(nomeTest, UtenteTest);
 		System.out.println("Ho preso il testo con index "+index);
 		try {
@@ -80,10 +82,19 @@ public class SvolgiQuiz extends JFrame {
 		contentPane.add(PanelInformazioni);
 		PanelInformazioni.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("GUI Test Visualizza");
-		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
-		lblNewLabel.setBounds(470, 27, 140, 57);
-		PanelInformazioni.add(lblNewLabel);
+		JPanel PanelViewInformation = new JPanel();
+		PanelViewInformation.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(65, 105, 225), new Color(123, 104, 238)));
+		PanelViewInformation.setForeground(new Color(173, 216, 230));
+		PanelViewInformation.setBackground(new Color(135, 206, 250));
+		PanelViewInformation.setBounds(355, 27, 275, 71);
+		PanelInformazioni.add(PanelViewInformation);
+		PanelViewInformation.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("<html><div style='text-align: center;'> Visualizza Test </div></html>");
+		lblNewLabel.setForeground(new Color(0, 0, 0));
+		lblNewLabel.setBounds(87, 11, 112, 45);
+		PanelViewInformation.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		
 		JButton IndietroButton = new JButton("Indietro");
 		IndietroButton.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 14));

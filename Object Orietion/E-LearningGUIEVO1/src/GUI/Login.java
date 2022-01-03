@@ -66,6 +66,9 @@ public class Login extends JFrame {
 		frame.setBounds(100, 100, 1080, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		frame.setIconImage(logo.getImage());
+		
 		
 		JPanel LoginLeft = new JPanel();
 		LoginLeft.setBorder(new EmptyBorder(1, 1, 1, 1));
@@ -203,23 +206,26 @@ public class Login extends JFrame {
 				//TODO Metodo al solo scopo di Debug Per implementazione Finale Connessione e metodo esterno DB
 				String emailString=EmailText.getText();
 				String passwordString=passwordField.getText();
-				if ((emailString.contentEquals("an.lanuto@studenti.unina.it")&&passwordString.contentEquals("prova"))||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))||(emailString.contentEquals("c")&&passwordString.contentEquals("c"))) 
+				int result=controller.VerificaUtente(emailString,passwordString);
+				System.out.println("result tornato "+result);
+				if (result==0||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))||(emailString.contentEquals("c")&&passwordString.contentEquals("c"))) 
 				{
-					controller.aggiungiUtente("Antonio", "Lanuto", 29, 9, 2001, "LNTntN01p29f839r");
+					
 					//TODO Aggiunta Manuale Da fare Dinamica Con query da Database
+					EmailText.setText("");
+					passwordField.setText("");
 					JFrame frameInsegnante=new InsegnanteGUI(controller,frame,emailString);
 					frame.setVisible(false);
 					frameInsegnante.setVisible(true);	
 				}
-				else if ((emailString.contentEquals("marco.pastore6@studenti.unina.it")&&passwordString.contentEquals("cammarota"))||(emailString.contentEquals("a")&&passwordString.contentEquals("a"))) 
+				else if (result==1||(emailString.contentEquals("a")&&passwordString.contentEquals("a"))) 
 				{
-					controller.aggiungiUtente("Marco", "Pastore", 6, 8, 2001, " PSTMRC01M06F839K");
-					JFrame frameStudente=new StudenteGUI(controller,frame);
+					JFrame frameStudente=new StudenteGUI(controller,frame,emailString);
+					EmailText.setText("");
+					passwordField.setText("");
 					frame.setVisible(false);
 					frameStudente.setVisible(true);
-				}
-				
-				
+				}	
 			}
 		});
 		
