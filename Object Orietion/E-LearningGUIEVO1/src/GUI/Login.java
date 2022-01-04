@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -22,6 +23,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JRadioButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Login extends JFrame {
 
@@ -108,6 +112,7 @@ public class Login extends JFrame {
 		panel_3.add(lblNewLabel_1);
 		
 		JPanel panel_3_1 = new JPanel();
+		panel_3_1.setForeground(new Color(0, 0, 0));
 		panel_3_1.setBackground(Color.WHITE);
 		panel_3_1.setLayout(null);
 		panel_3_1.setBounds(37, 321, 408, 385);
@@ -198,6 +203,21 @@ public class Login extends JFrame {
 		MostraCheckBox.setBounds(38, 214, 125, 23);
 		panel_3_1.add(MostraCheckBox);
 		
+		JLabel RegisterLabel = new JLabel("Non hai un Account? Registrati");
+		RegisterLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				JFrame frameCreaRegister=new Register(controller,frame);
+				frame.setVisible(false);
+				frameCreaRegister.setVisible(true);
+			}
+		});
+		RegisterLabel.setForeground(new Color(0, 102, 255));
+		RegisterLabel.setFont(new Font("Segoe UI", Font.BOLD, 11));
+		RegisterLabel.setBounds(212, 216, 168, 17);
+		panel_3_1.add(RegisterLabel);
+		
 	
 	
 		ButtonLogin.addActionListener(new ActionListener() {
@@ -225,7 +245,11 @@ public class Login extends JFrame {
 					passwordField.setText("");
 					frame.setVisible(false);
 					frameStudente.setVisible(true);
-				}	
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null,"Utente non trovato","Errore Login",JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		

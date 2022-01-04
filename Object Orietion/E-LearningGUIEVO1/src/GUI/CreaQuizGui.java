@@ -71,8 +71,7 @@ public class CreaQuizGui extends JFrame {
 		controller=c;
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
-		//TODO Da implementare La corrispondeza tra codice fiscale ed autore del test
-		//
+		
 		
 		
 		
@@ -234,21 +233,24 @@ public class CreaQuizGui extends JFrame {
 	    			int num=Integer.parseInt(str);
 	    			
 	    			controller.aggiungiTest(NomeTest.getText(), codiceString,(int)Giornospinner.getValue(),(int)MeseSpinner.getValue(),(int)AnnoSpinner.getValue());
+	    			controller.AggiungiTestalDb();
 	    			System.out.println("Inizio Procedura InvioController");
 	    			for (int i = 0; i < num; i++) 
 					{
-	    				controller.addQuizToTest(0, 0, QuizArray[i].modalitaDomanda);
+	    				controller.addQuizToTest((int) QuizArray[i].punteggioPositivoJSpinner.getValue(),(int) QuizArray[i].punteggioNegativoJSpinner.getValue() , QuizArray[i].modalitaDomanda);
 	    				if(QuizArray[i].modalitaDomanda.contentEquals("M"))
 	    				{
 	    					int NumeroRisposteMesse=(Integer)QuizArray[i].QuanteMultipleSpinner.getValue();
 	    					String domandaString=QuizArray[i].DomandaField.getText();
 							String testoString=QuizArray[i].RispostaField.getText();
 							controller.addDomanda(domandaString,testoString);
-	    					for (int j = 0; j < NumeroRisposteMesse; j++) 
+							controller.AggiungiQuizAlDB("M");
+							for (int j = 0; j < NumeroRisposteMesse; j++) 
 	    					{
 	    						 domandaString=QuizArray[i].labels[j].getText();
 								 testoString=QuizArray[i].MultiplaRisposta[j].getText();
 								 controller.addDomanda(domandaString,testoString);
+								 controller.AggiungiRipostaAlDB(testoString);
 	    					}
 	    				}
 	    				else if(QuizArray[i].modalitaDomanda.contentEquals("A")) 
@@ -256,7 +258,8 @@ public class CreaQuizGui extends JFrame {
 	    					String domandaString=QuizArray[i].DomandaField.getText();
 							String testoString=QuizArray[i].RispostaField.getText();
 							controller.addDomanda(domandaString,testoString);
-						}
+							controller.AggiungiQuizAlDB("A");
+	    				}
 	    				else {
 	    					System.out.println("C é un errore Tommaso");
 						}

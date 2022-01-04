@@ -8,7 +8,7 @@ public class Test implements Cloneable
 	public ArrayList <Quiz> QuizPresenti;
 	public int PunteggioFinale;
 	public Utente OwenerUtente;
-	private Data scandenzaData;
+	public Data scandenzaData;
 	
 	
 	public Test(String nome,Utente utente,Data scData) 

@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.ibm.icu.util.BytesTrie.Result;
+
 
 import DAO.TestDAO;
 import Database.ConnessioneDatabase;
 import Model.Data;
+import Model.Domanda;
+import Model.Quiz;
 import Model.Test;
 import Model.Utente;
 
@@ -31,7 +33,6 @@ public class TestDaoImplementazionePostgres implements TestDAO
 	}
 	public ArrayList<Test> CreaUtenti(ArrayList<Utente> Utenti) 
 	{
-		int Numerotest=0;
 		ArrayList<Test>ListaTest=new ArrayList<Test>();;
 		// TODO Auto-generated method stub
 		try 
@@ -40,9 +41,7 @@ public class TestDaoImplementazionePostgres implements TestDAO
 					+ "EXTRACT(DAY FROM scadenzadata)as GiornoScandenza,"
 					+ "EXTRACT(MONTH FROM scadenzadata)as MeseScandenza,"
 					+ "EXTRACT(YEAR FROM scadenzadata)as AnnoScandenza  from test");
-
-			ResultSet rs2 = queryTest.executeQuery();
-			
+			ResultSet rs2 = queryTest.executeQuery();			
 			while(rs2.next()) 
 			{
 				int aggiungi=0;
@@ -80,7 +79,76 @@ public class TestDaoImplementazionePostgres implements TestDAO
 				mese=rs2.getInt("MeseScandenza");
 				anno=rs2.getInt("AnnoScandenza");
 				ListaTest.add(new Test(nomeTest, Utenti.get(index), new Data(giorno, mese, anno)));
-				//Da Implementare Quiz
+				String idtestString=rs2.getString("idtest");
+				PreparedStatement queryQuizMultipla = connection.prepareStatement("select * from quizmultipla where idtestriferimento='"
+						+ idtestString+"'");
+				ResultSet rs3 = queryQuizMultipla.executeQuery();
+				int k=0;
+				while(rs3.next())
+				{
+					int punteggioP=rs3.getInt("PunteggioRispostaCorretta");
+					int negativoN=rs3.getInt("PunteggioRispostaSbagliato");
+					String modalita="M";
+					if(ListaTest.size()==0)
+					{
+						ListaTest.get(0).AddQuiz(new Quiz(ListaTest.get(0)));
+						ListaTest.get(0).QuizPresenti.get(k).AddParametri(punteggioP , negativoN, modalita);
+						ListaTest.get(0).QuizPresenti.get(k).AggiungiDomanda(new Domanda(rs3.getString("Domanda"), ""));
+						String idquizMultiploString=rs3.getString("idquizm");
+						PreparedStatement queryDomandaMultipla=connection.prepareStatement("select * from risposta where idquizriferimento='"
+								+ idquizMultiploString+"'");
+						ResultSet rs4 = queryDomandaMultipla.executeQuery();
+						char lettera='A';  
+						String letteraString=String.valueOf(lettera);  
+						while(rs4.next())
+						{
+							ListaTest.get(0).QuizPresenti.get(k).AggiungiDomanda(new Domanda(letteraString, rs4.getString("risposta")));
+							lettera++;
+						}
+						lettera='A';
+					}
+					else 
+					{
+						ListaTest.get(ListaTest.size()-1).AddQuiz(new Quiz(ListaTest.get(ListaTest.size()-1)));
+						ListaTest.get(ListaTest.size()-1).QuizPresenti.get(k).AddParametri(punteggioP , negativoN, modalita);
+						ListaTest.get(ListaTest.size()-1).QuizPresenti.get(k).AggiungiDomanda(new Domanda(rs3.getString("Domanda"), ""));
+						String idquizMultiploString=rs3.getString("idquizm");
+						PreparedStatement queryDomandaMultipla=connection.prepareStatement("select * from risposta where idquizriferimento='"
+								+ idquizMultiploString+"'");
+						ResultSet rs4 = queryDomandaMultipla.executeQuery();
+						char lettera='A';  
+						String letteraString=String.valueOf(lettera);  
+						while(rs4.next())
+						{
+							ListaTest.get(ListaTest.size()-1).QuizPresenti.get(k).AggiungiDomanda(new Domanda(letteraString, rs4.getString("risposta")));
+							lettera++;
+							letteraString=String.valueOf(lettera);
+						}
+					}		
+					k++;
+				}
+				PreparedStatement queryQuizaperta = connection.prepareStatement("select * from quizaperta where idtestriferimento='"
+						+ idtestString+"'");
+				ResultSet rs4 = queryQuizaperta.executeQuery();
+				while (rs4.next())
+				{
+					int punteggioP=rs4.getInt("PunteggioMassimo");
+					int negativoN=rs4.getInt("PunteggioMinimo");
+					String modalita="A";
+					if (ListaTest.size()==0) 
+					{
+						ListaTest.get(0).AddQuiz(new Quiz(ListaTest.get(0)));
+						ListaTest.get(0).QuizPresenti.get(k).AddParametri(punteggioP , negativoN, modalita);
+						ListaTest.get(0).QuizPresenti.get(k).AggiungiDomanda(new Domanda(rs4.getString("Domanda"),rs4.getString("risposta") ));
+					}
+					else 
+					{
+						ListaTest.get(ListaTest.size()-1).AddQuiz(new Quiz(ListaTest.get(ListaTest.size()-1)));
+						ListaTest.get(ListaTest.size()-1).QuizPresenti.get(k).AddParametri(punteggioP , negativoN, modalita);
+						ListaTest.get(ListaTest.size()-1).QuizPresenti.get(k).AggiungiDomanda(new Domanda(rs4.getString("Domanda"),rs4.getString("risposta")));
+					}
+					k++;
+				}			
 			}
 		}
 		catch (SQLException e) {
@@ -89,6 +157,75 @@ public class TestDaoImplementazionePostgres implements TestDAO
 		}
 		return ListaTest;
 	}
-
+	public void AggiugiTestAlDB(String codice, String nome, int g, int m, int a) {
+		// TODO Auto-generated method stub
+		try 
+		{
+			PreparedStatement queryRecuperoElemento=connection.prepareStatement("select iddocente from docente where codfiscale='"+ codice+ "'");
+			ResultSet rSet=queryRecuperoElemento.executeQuery();
+			rSet.next();
+			codice=rSet.getString("iddocente");
+			PreparedStatement queryAggiuElementoDB=connection.prepareStatement("INSERT INTO test VALUES"
+					+ "(default,'"+nome+"',120,10,'"+m+"/"+g+"/"+a+ "','"+codice+"')");
+			queryAggiuElementoDB.executeUpdate();
+			
+		} 
+		catch (SQLException e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void AggiungiQuiz(String Modalita, String Domanda, String Risposta, int punteggioP,
+			int PunteggioN) 
+	{
+		// TODO Auto-generated method stub
+		try 
+		{
+			PreparedStatement QueryRecuperoTest=connection.prepareStatement("select idtest  from test  ORDER BY idtest DESC");
+			ResultSet rSet = QueryRecuperoTest.executeQuery();
+			rSet.next();
+			int numeroTest=rSet.getInt("idtest");
+			if(Modalita.contentEquals("A"))
+			{
+				PreparedStatement queryAggiugngiQuizA= connection.prepareStatement("INSERT INTO  quizaperta VALUES"
+						+ "(default,'"+Domanda+"','"+Risposta+"',100,"+PunteggioN+","+punteggioP+","+numeroTest+")");
+				queryAggiugngiQuizA.executeUpdate();
+			}
+			else 
+			{
+				PreparedStatement queryAggiugngiQuizM= connection.prepareStatement("INSERT INTO quizmultipla VALUES\r\n"
+						+ "(default,'"+Domanda+"',"+punteggioP+","+PunteggioN+","+numeroTest+")");
+				queryAggiugngiQuizM.executeUpdate();
+			}
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	@Override
+	public void AggiungiRisposta(String risposta) 
+	{
+		// TODO Auto-generated method stub
+		PreparedStatement QueryRecuperoTest;
+		try {
+			QueryRecuperoTest = connection.prepareStatement("select idquizm  from quizmultipla  ORDER BY idquizm DESC");
+			ResultSet rSet = QueryRecuperoTest.executeQuery();
+			rSet.next();
+			int numeroQuiz=rSet.getInt("idquizm");
+			PreparedStatement queryAggiungiRispoStatement=connection.prepareStatement("INSERT INTO RISPOSTA values\r\n"
+					+ "(default,'"+risposta+"',"+numeroQuiz+")");
+			queryAggiungiRispoStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
 	
 }

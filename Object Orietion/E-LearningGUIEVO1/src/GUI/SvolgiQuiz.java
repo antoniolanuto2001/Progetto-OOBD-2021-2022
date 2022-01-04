@@ -15,6 +15,7 @@ import Controller.Controller;
 import Model.Test;
 
 import javax.swing.JLabel;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -188,7 +189,19 @@ public class SvolgiQuiz extends JFrame {
 				String s=String.valueOf(i+1);
 				quiz[i]=new FormVisualQuiz();
 				quiz[i].NumeroQuiz.setText(s);
-				quiz[i].DomandaEffettivaLabel.setText(provaTest.QuizPresenti.get(i).Domande.get(0).Domanda);
+				String spitTotaleString=provaTest.QuizPresenti.get(i).Domande.get(0).Domanda;
+				if(spitTotaleString.length()>50)
+				{
+					int half = spitTotaleString.length() % 2 == 0 ? spitTotaleString.length()/2 : spitTotaleString.length()/2 + 1;
+					String first = spitTotaleString.substring(0, half);
+					String second = spitTotaleString.substring(half);
+					quiz[i].DomandaEffettivaLabel.setText("<html><body>"+first+"<br>"+second+"</body></html>");
+				}
+				else
+				{
+					quiz[i].DomandaEffettivaLabel.setText(spitTotaleString);
+				}
+				
 				quiz[i].add(quiz[i].RispostaApertaLabel);
 				quiz[i].add(quiz[i].RispostaApertaTextArea);
 				quiz[i].repaint();
@@ -207,18 +220,32 @@ public class SvolgiQuiz extends JFrame {
 				quiz[i]=new FormVisualQuiz();
 				quiz[i].NumeroQuiz.setText(s);
 				quiz[i].DomandaEffettivaLabel.setText(provaTest.QuizPresenti.get(i).Domande.get(0).Domanda);
+				quiz[i].risposteMultipleGruppo= new ButtonGroup();
 				quiz[i].add(quiz[i].RispostaMultiplaLabelPrinciapale);
 				for (int j = 1; j < provaTest.QuizPresenti.get(i).Domande.size(); j++) 
 				{
 					quiz[i].RisposteMultipleLabel[j]=new JLabel();
 					quiz[i].RisposteMultipleLabel[j].setFont(new Font("Segoe UI", Font.PLAIN, 17));
 					quiz[i].RisposteMultipleLabel[j].setBounds(40, aggiornaY, 43, 58);
+		
 					quiz[i].RisposteMultipleLabel[j].setText(provaTest.QuizPresenti.get(i).Domande.get(j).Domanda);
 					quiz[i].RispostaMultiplaRadioButton[j]=new JRadioButton();
-					quiz[i].RispostaMultiplaRadioButton[j].setFont(new Font("Source Code Pro", Font.PLAIN, 14));
+					quiz[i].RispostaMultiplaRadioButton[j].setFont(new Font("Source Code Pro", Font.PLAIN, 13));
 					quiz[i].RispostaMultiplaRadioButton[j].setBounds(69, aggiornaY+3, 374, 58);
-					quiz[i].RispostaMultiplaRadioButton[j].setText(provaTest.QuizPresenti.get(i).Domande.get(j).Riposta);
-					aggiornaY=aggiornaY+40;
+					String spitTotaleString=provaTest.QuizPresenti.get(i).Domande.get(j).Riposta;
+					if(spitTotaleString.length()>40)
+					{
+						int half = spitTotaleString.length() % 2 == 0 ? spitTotaleString.length()/2 : spitTotaleString.length()/2 + 1;
+						String first = spitTotaleString.substring(0, half);
+						String second = spitTotaleString.substring(half);
+						quiz[i].RispostaMultiplaRadioButton[j].setText("<html><body>"+first+"<br>"+second+"</body></html>");
+					}
+					else 
+					{
+						quiz[i].RispostaMultiplaRadioButton[j].setText(spitTotaleString);
+					}
+					quiz[i].risposteMultipleGruppo.add(quiz[i].RispostaMultiplaRadioButton[j]);
+					aggiornaY=aggiornaY+55;
 					quiz[i].add(quiz[i].RisposteMultipleLabel[j]);
 					quiz[i].add(quiz[i].RispostaMultiplaRadioButton[j]);
 					quiz[i].repaint();

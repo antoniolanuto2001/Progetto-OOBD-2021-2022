@@ -182,10 +182,6 @@ public class StudenteGUI extends JFrame {
 		
 		
 		panelMain.add(scrollPane);
-		/*
-		PanelQuizDisponibili.setPreferredSize(new Dimension(818*10, 400));
-	    scrollPane.setPreferredSize(new Dimension(818*10, 400));
-	    */
 	    scrollPane.setViewportView(PanelQuizDisponibili);
 	   
 	    panelMain.add(scrollPane);

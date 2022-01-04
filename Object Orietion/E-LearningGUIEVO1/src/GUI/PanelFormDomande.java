@@ -27,6 +27,8 @@ public class PanelFormDomande extends JPanel
 	public JTextField RispostaField;
 	final public JLabel[] labels=new JLabel[100];
 	final public JTextField MultiplaRisposta[] = new JTextField[100];
+	public JSpinner punteggioPositivoJSpinner;
+	public JSpinner punteggioNegativoJSpinner;
 	public String modalitaDomanda;
 	public int tommaso;
 	public PanelFormDomande(int numero) 
@@ -42,6 +44,23 @@ public class PanelFormDomande extends JPanel
 		NumeroQuizLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		NumeroQuizLabel.setBounds(10, 11, 180, 20);
 		add(NumeroQuizLabel);
+		SpinnerModel model1=new SpinnerNumberModel(1,1,10000,1);
+	    SpinnerModel model2=new SpinnerNumberModel(0,-10000,10000,1);
+		JLabel PositivoLabel = new JLabel("Puteggio Positivo :");
+		PositivoLabel.setFont(new Font("Segoe UI", Font.BOLD, 11));
+		PositivoLabel.setBounds(140, 13, 180, 20);
+		add(PositivoLabel);
+		punteggioPositivoJSpinner= new JSpinner(model1);
+	    punteggioPositivoJSpinner.setBounds(240, 13, 39, 20);
+		add(punteggioPositivoJSpinner);
+		JLabel NegativoLabel = new JLabel("Puteggio negativo:");
+		NegativoLabel.setFont(new Font("Segoe UI", Font.BOLD, 11));
+		NegativoLabel.setBounds(285, 13, 180, 20);
+		add(NegativoLabel);
+		punteggioNegativoJSpinner= new JSpinner(model2);
+		punteggioNegativoJSpinner.setBounds(385, 13, 39, 20);
+		add(punteggioNegativoJSpinner);
+	    
 		
 		DomandaField = new JTextField();
 		DomandaField.setBounds(71, 48, 335, 31);

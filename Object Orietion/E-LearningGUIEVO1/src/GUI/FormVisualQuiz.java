@@ -3,9 +3,11 @@ package GUI;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -19,6 +21,8 @@ public class FormVisualQuiz extends JPanel
 	public JLabel RispostaMultiplaLabelPrinciapale;
 	public JLabel RispostaApertaLabel;
 	public JTextArea RispostaApertaTextArea;
+	public ButtonGroup risposteMultipleGruppo;
+
 	
 	public FormVisualQuiz() 
 	{
@@ -62,5 +66,6 @@ public class FormVisualQuiz extends JPanel
 		RispostaApertaTextArea.setToolTipText("Scrivi Qui La Risposta");
 		RispostaApertaTextArea.setLineWrap(true);
 		RispostaApertaTextArea.setBounds(93, 149, 350, 221);
+	
 	}
 }

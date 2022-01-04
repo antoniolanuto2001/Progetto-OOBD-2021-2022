@@ -2,8 +2,12 @@ package Controller;
 
 import java.util.ArrayList;
 
+import org.eclipse.jface.preference.StringButtonFieldEditor;
+
+import DAO.RegisterDAO;
 import DAO.TestDAO;
 import DAO.UtenteDao;
+import ImplementazionePostgresDAO.RegisterDaoImplementazioneDAO;
 import ImplementazionePostgresDAO.TestDaoImplementazionePostgres;
 import ImplementazionePostgresDAO.UtenteImplementazioneDAO;
 import Model.Utente;
@@ -68,7 +72,8 @@ public class Controller
 		else 
 		{
 			ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).AggiungiDomanda(new Domanda(Domanda, Risposta));		
-		}		
+		}	
+		
 	}
 	public void Debug()
 	{
@@ -83,10 +88,70 @@ public class Controller
 			System.out.println("Risposta: "+ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Riposta);
 		}
 	}
+	public void Recuperadipartimenti(String []diparimenti)
+	{
+		RegisterDAO recuperaDipartimentiDao= new RegisterDaoImplementazioneDAO();
+		recuperaDipartimentiDao.RecuperaDiparmenti(diparimenti);
+		
+	}
 	public int SizeTestArrayList()
 	{
 		int size=ListaTest.size();
 		return size;
+		
+	}
+	public void AggiungiTestalDb()
+	{
+		
+		if(ListaTest.size()==0)
+		{
+			String codiceFiscaleString=ListaTest.get(0).OwenerUtente.getCodiceFiscale();
+			String nomeTestString=ListaTest.get(0).getNomeTest();
+			int Giorno=ListaTest.get(0).scandenzaData.getGiorno();
+			int Mese=ListaTest.get(0).scandenzaData.getMese();
+			int Anno=ListaTest.get(0).scandenzaData.getAnno();
+			TestDAO AggTestDB=  new TestDaoImplementazionePostgres();
+			AggTestDB.AggiugiTestAlDB(codiceFiscaleString, nomeTestString, Giorno, Mese, Anno);
+		}
+		else 
+		{
+			String codiceFiscaleString=ListaTest.get(ListaTest.size()-1).OwenerUtente.getCodiceFiscale();
+			String nomeTestString=ListaTest.get(ListaTest.size()-1).getNomeTest();
+			int Giorno=ListaTest.get(ListaTest.size()-1).scandenzaData.getGiorno();
+			int Mese=ListaTest.get(ListaTest.size()-1).scandenzaData.getMese();
+			int Anno=ListaTest.get(ListaTest.size()-1).scandenzaData.getAnno();
+			TestDAO AggTestDB=  new TestDaoImplementazionePostgres();
+			AggTestDB.AggiugiTestAlDB(codiceFiscaleString, nomeTestString, Giorno, Mese, Anno);
+		}
+		
+	}
+	public void AggiungiQuizAlDB(String modalitaString) 
+	{
+		if(ListaTest.size()==0)
+		{
+			String domanda=ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Domanda;
+			String risposta=ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Riposta;
+			int puntenggioP=ListaTest.get(0).QuizPresenti.get(0).Positivopunteggio;
+			int NegativoP=ListaTest.get(0).QuizPresenti.get(0).Negativopunteggio;
+			TestDAO AggQuizDB=  new TestDaoImplementazionePostgres();
+			AggQuizDB.AggiungiQuiz(modalitaString, domanda, risposta, puntenggioP, NegativoP);
+		}
+		else 
+		{
+			String domanda=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Domande.get(0).Domanda;
+			String risposta=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Domande.get(0).Riposta;
+			int puntenggioP=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Positivopunteggio;
+			int NegativoP=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Negativopunteggio;
+			
+			TestDAO AggQuizDB=  new TestDaoImplementazionePostgres();
+			AggQuizDB.AggiungiQuiz(modalitaString, domanda, risposta, puntenggioP, NegativoP);
+		}
+	}
+	public void AggiungiRipostaAlDB(String risposta)
+	{
+		TestDAO aggiungiRispostaDao= new TestDaoImplementazionePostgres();
+		aggiungiRispostaDao.AggiungiRisposta(risposta);
+		
 	}
 	public ArrayList getTestArrayList(int index)
 	{
@@ -129,6 +194,11 @@ public class Controller
 		}
     	return a;
     }
+	public void RecuperaCDL(String[] Cdl)
+	{
+		RegisterDAO recuperaCDLDao= new RegisterDaoImplementazioneDAO();
+		recuperaCDLDao.RecuperaCdL(Cdl);
+	}
     public int VerificaUtente(String email,String passString)
     {
     	UtenteDao DaoCarabiniere = new UtenteImplementazioneDAO();
