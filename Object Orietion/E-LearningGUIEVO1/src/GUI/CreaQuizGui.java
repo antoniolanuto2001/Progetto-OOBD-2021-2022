@@ -69,7 +69,7 @@ public class CreaQuizGui extends JFrame {
 		CodiceFiscale=codiceString;
 		posizioneY=20;
 		controller=c;
-		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images//logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
 		
 		
@@ -106,7 +106,7 @@ public class CreaQuizGui extends JFrame {
 		IndietroButton.setVerticalAlignment(SwingConstants.TOP);
 		IndietroButton.setBounds(860, 27, 149, 57);
 		panel.add(IndietroButton);
-		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/backIcona.png"));
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/images//backIcona.png"));
 		IndietroButton.setIcon(imgAccopuIcon);
 		
 		JPanel panel_1 = new JPanel();

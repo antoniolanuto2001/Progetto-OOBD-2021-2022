@@ -56,7 +56,7 @@ public class SvolgiQuiz extends JFrame {
 		frame=this;
 		controller=c;
 		PosizioneY=20;
-		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images/logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
 		int index=controller.returnIndexListaTest(nomeTest, UtenteTest);
 		System.out.println("Ho preso il testo con index "+index);
@@ -102,7 +102,7 @@ public class SvolgiQuiz extends JFrame {
 		IndietroButton.setVerticalAlignment(SwingConstants.TOP);
 		IndietroButton.setBounds(860, 27, 149, 57);
 		PanelInformazioni.add(IndietroButton);
-		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/backIcona.png"));
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/images/backIcona.png"));
 		IndietroButton.setIcon(imgAccopuIcon);
 		
 		JLabel NomeLabel = new JLabel("Nome");
@@ -139,7 +139,7 @@ public class SvolgiQuiz extends JFrame {
 		JLabel AccountLabel2 = new JLabel("");
 		AccountLabel2.setBounds(10, 26, 50, 57);
 		PanelInformazioni.add(AccountLabel2);
-		ImageIcon imgAccopuIcon3 = new ImageIcon(this.getClass().getResource("/iconaAccount6.png"));
+		ImageIcon imgAccopuIcon3 = new ImageIcon(this.getClass().getResource("/images/iconaAccount6.png"));
 		AccountLabel2.setIcon(imgAccopuIcon3);
 		
 		JPanel InformazioniPreliminari = new JPanel();

@@ -70,7 +70,7 @@ public class Login extends JFrame {
 		frame.setBounds(100, 100, 1080, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images/logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
 		
 		
@@ -102,7 +102,7 @@ public class Login extends JFrame {
 		JLabel AccountLabel = new JLabel("");
 		AccountLabel.setBounds(147, 67, 100, 100);
 		panel_3.add(AccountLabel);
-		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/iconaAccount4.png"));
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/images/iconaAccount4.png"));
 		AccountLabel.setIcon(imgAccopuIcon);
 		
 		JLabel lblNewLabel_1 = new JLabel("Portale d'accesso alla piattoforma  di Quiz!");
@@ -173,7 +173,7 @@ public class Login extends JFrame {
 		
 		JLabel ProgrammaerLabel = new JLabel("");
 		ProgrammaerLabel.setBounds(-63, 172, 660, 453);
-		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/ImagePrincipal2.png"));
+		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/images/ImagePrincipal2.png"));
 		LoginRight.add(ProgrammaerLabel);
 		ProgrammaerLabel.setIcon(imgAccopuIcon2);
 		JButton ButtonLogin = new JButton("Login");
@@ -248,7 +248,7 @@ public class Login extends JFrame {
 				}
 				else 
 				{
-					JOptionPane.showMessageDialog(null,"Utente non trovato","Errore Login",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Email Invalida","Errore Login",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

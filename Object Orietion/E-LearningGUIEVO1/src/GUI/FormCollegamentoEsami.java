@@ -37,9 +37,9 @@ public class FormCollegamentoEsami extends JPanel
 		IconaEsameLabel.setBounds(39, 32, 146, 107);
 		int n = (int) (Math.random() * 3);
 		//Generazione Icona Randomica
-		ImageIcon imgiconaIcon1 = new ImageIcon(this.getClass().getResource("/EsameIcona.png"));
-		ImageIcon imgiconaIcon2 = new ImageIcon(this.getClass().getResource("/EsameIcona2.png"));
-		ImageIcon imgiconaIcon3 = new ImageIcon(this.getClass().getResource("/EsameIcona31.png"));
+		ImageIcon imgiconaIcon1 = new ImageIcon(this.getClass().getResource("/images/EsameIcona.png"));
+		ImageIcon imgiconaIcon2 = new ImageIcon(this.getClass().getResource("/images/EsameIcona2.png"));
+		ImageIcon imgiconaIcon3 = new ImageIcon(this.getClass().getResource("/images/EsameIcona31.png"));
 		if(n==0)
 		{
 			IconaEsameLabel.setIcon(imgiconaIcon1);

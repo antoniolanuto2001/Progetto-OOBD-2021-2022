@@ -57,7 +57,7 @@ public class InsegnanteGUI extends JFrame {
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 800);
-		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images/logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,7 +75,7 @@ public class InsegnanteGUI extends JFrame {
 		IndietroButton.setVerticalAlignment(SwingConstants.TOP);
 		IndietroButton.setBounds(860, 27, 149, 57);
 		PanelInformazioni.add(IndietroButton);
-		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/backIcona.png"));
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/images/backIcona.png"));
 		IndietroButton.setIcon(imgAccopuIcon);
 		
 		JLabel NomeLabel = new JLabel("Nome");
@@ -114,7 +114,7 @@ public class InsegnanteGUI extends JFrame {
 		JLabel AccountLabel2 = new JLabel("");
 		AccountLabel2.setBounds(10, 26, 50, 57);
 		PanelInformazioni.add(AccountLabel2);
-		ImageIcon imgAccopuIcon3 = new ImageIcon(this.getClass().getResource("/iconaAccount6.png"));
+		ImageIcon imgAccopuIcon3 = new ImageIcon(this.getClass().getResource("/images/iconaAccount6.png"));
 		AccountLabel2.setIcon(imgAccopuIcon3);
 		
 		JPanel PanelViewInformation = new JPanel();
@@ -136,7 +136,7 @@ public class InsegnanteGUI extends JFrame {
 		PanelPrincipale.setBounds(0, 122, 1064, 651);
 		contentPane.add(PanelPrincipale);
 		PanelPrincipale.setLayout(null);
-		ImageIcon imgNuovoquiz= new ImageIcon(this.getClass().getResource("/iconaNuovoQuiz2.png"));
+		ImageIcon imgNuovoquiz= new ImageIcon(this.getClass().getResource("/images/iconaNuovoQuiz2.png"));
 		
 		JPanel panel = new JPanel();
 		panel.setToolTipText("Tasto Crea per creare il quiz");

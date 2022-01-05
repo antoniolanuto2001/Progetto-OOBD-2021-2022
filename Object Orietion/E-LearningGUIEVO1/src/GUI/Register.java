@@ -53,7 +53,7 @@ public class Register extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 800);
-		ImageIcon logo = new ImageIcon(this.getClass().getResource("/logoPrincipale.png"));
+		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images/logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,7 +85,7 @@ public class Register extends JFrame {
 		IndietroButton.setVerticalAlignment(SwingConstants.TOP);
 		IndietroButton.setBounds(860, 27, 149, 57);
 		panel.add(IndietroButton);
-		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/backIcona.png"));
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/images/backIcona.png"));
 		IndietroButton.setIcon(imgAccopuIcon);
 		
 		JPanel PanelRegistrazione = new JPanel();
