@@ -156,6 +156,7 @@ CREATE TABLE QUIZAPERTA
 
 	PRIMARY KEY(IdQuizA),
 	FOREIGN KEY(IdtestRiferimento) REFERENCES  TEST(IdTest)
+	ON DELETE CASCADE
 );
 CREATE SEQUENCE IdQuizSeq
 START 1
@@ -171,6 +172,7 @@ OWNED BY QUIZAPERTA.IdQuizA;
 CREATE TABLE QUIZMULTIPLA
 (
 	IdQuizM SERIAL,
+	LetteraCorretta VARCHAR(1),
 	Domanda VARCHAR(800),
 	PunteggioRispostaCorretta INT,
 	PunteggioRispostaSbagliato INT,
@@ -178,6 +180,7 @@ CREATE TABLE QUIZMULTIPLA
 
 	PRIMARY KEY(IdQuizM),
 	FOREIGN KEY(IdtestRiferimento) REFERENCES TEST(IdTest)
+	ON DELETE CASCADE
 );
 CREATE SEQUENCE IdQuizMSeq
 START 1
@@ -194,10 +197,12 @@ CREATE TABLE RISPOSTA
 (
 	IDRisposta SERIAL,
 	Risposta VARCHAR(200),
+	LetteraToken VARCHAR(1),
 	IDQuizRiferimento INT,
 
 	PRIMARY KEY(IDRisposta) ,
 	FOREIGN KEY(IDQuizRiferimento) REFERENCES QUIZMULTIPLA(IdQuizM)
+	ON DELETE CASCADE
 );
 CREATE SEQUENCE IdRiSpostaSeq
 START 1
@@ -206,46 +211,80 @@ MINVALUE 1
 MAXVALUE 300000
 OWNED BY RISPOSTA.IDRisposta;
 /*
-    ---------------------------
-    !Table-RISULTATITEST!
-    ---------------------------
+    -----------------------------------
+    		!Table-RISULTATOTEST!
+    -----------------------------------
 */
-CREATE TABLE RISULTATITEST
+CREATE TABLE RISULTATOTEST
 (
-	IdRisultato SERIAL,
-	NumeroQuiz INT,
-	IdTest INT,
+	IdRisultatoTest SERIAL,
 	Matricola VARCHAR(9),
-	PuteggioTotale INT,
+	PunteggioTotale INT,
+	DataTest DATE,
+	IdTest INT,
+	NumeroQuiz INT,
 
-	PRIMARY KEY(IdRisultato),
+	PRIMARY KEY (IdRisultatoTest),
+	FOREIGN KEY(IdTest) REFERENCES TEST(IdTest),
 	FOREIGN KEY(Matricola) REFERENCES STUDENTE(Matricola)
 );
-CREATE SEQUENCE IdRisulatatoSeq
+/*
+    ---------------------------------
+    !Table-VALUTAZIONERISPOSTAAPERTA!
+    ---------------------------------
+*/
+CREATE TABLE VALUTAZIONERISPOSTAAPERTA
+(
+	IdValutazioneAperta SERIAL,
+	RispostaInserita VARCHAR(2000),
+	PunteggioAssegnato INT,
+	VALUTATA BOOLEAN,
+	Matricola VARCHAR(9),
+	IdDocente VARCHAR(5),
+	IdRisultatoTest INT,
+	IdQuizA INT,
+
+	PRIMARY KEY (IdValutazioneAperta),
+	FOREIGN KEY(IdRisultatoTest) REFERENCES RISULTATOTEST(IdRisultatoTest),
+	FOREIGN KEY(IdDocente) REFERENCES DOCENTE(IdDocente),
+	FOREIGN KEY(Matricola) REFERENCES STUDENTE(Matricola),
+	FOREIGN KEY(IdQuizA) REFERENCES QUIZAPERTA(IdQuizA)
+
+);
+CREATE SEQUENCE IdValutazioneApertaSeq
 START 1
 INCREMENT 1
 MINVALUE 1
 MAXVALUE 300000
-OWNED BY RISULTATITEST.IdRisultato;
+OWNED BY VALUTAZIONERISPOSTAAPERTA.IdValutazioneAperta;
 /*
-    ---------------------------------
-    !Table-VALUTAZIONERISPOSTEAPERTE!
-    ---------------------------------
+    -----------------------------------
+    !Table-VALUTAZIONERISPOSTAMULTIPLA!
+    -----------------------------------
 */
-CREATE TABLE VALUTAZIONERISPOSTEAPERTE
-(
-	IdQuizAperto INT,
-	IdDocente VARCHAR(5),
-	IdTest INT,
-	IdRisultato INT,
-	PunteggioOttenuto INT,
-	DataValutazione TIMESTAMP,
 
-	FOREIGN KEY (IdQuizAperto) REFERENCES QUIZAPERTA(IdQuizA),
-	FOREIGN KEY (IdDocente) REFERENCES DOCENTE(IdDocente),
-	FOREIGN KEY (IdTest) REFERENCES TEST(IdTest),
-	FOREIGN KEY (IdRisultato) REFERENCES RISULTATITEST(IdRisultato)
+CREATE TABLE VALUTAZIONERISPOSTAMULTIPLA
+(
+	IdValutazioneMultipla SERIAL,
+	LetteraInserita VARCHAR(1),
+	Matricola VARCHAR(9),
+	PunteggioOttenuto INT,
+	VALUTATA BOOLEAN,
+	IdRisultatoTest INT,
+	IdQuizM INT,
+
+	PRIMARY KEY (IdValutazioneMultipla),
+	FOREIGN KEY(IdRisultatoTest) REFERENCES RISULTATOTEST(IdRisultatoTest),
+	FOREIGN KEY(Matricola) REFERENCES STUDENTE(Matricola),
+	FOREIGN KEY(IdQuizM) REFERENCES QUIZMULTIPLA(IdQuizM)
 );
+CREATE SEQUENCE IdValutazioneMultiplaSeq
+START 1
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 300000
+OWNED BY VALUTAZIONERISPOSTAMULTIPLA.IdValutazioneMultipla;
+
 /*
     ---------------------------------
       !VINCOLI->TABLE->DOCENTE!
@@ -391,10 +430,33 @@ INSERT INTO insegnamento VALUES
 
 
 /*
----------------------------------
-	!INSERT->TABLE->QUIZMULTIPLA!
----------------------------------
+  ---------------------------------
+    !INSERT->TABLE->QUIZMULTIPLA!
+  ---------------------------------
 */
 INSERT INTO quizmultipla VALUES
-(default,'A cosa serve una Memoria Cache?',1,0,7),
-(default,'Come si ottengono prestazioni migliori con le Cache?',1,0,7);
+(default,'C','A cosa serve una Memoria Cache?',1,0,7),
+(default,'A','Come si ottengono prestazioni migliori con le Cache?',1,0,7);
+/*
+  ---------------------------------
+    !INSERT->TABLE->RISPOSTA!
+  ---------------------------------
+*/
+INSERT INTO RISPOSTA values
+(default,'Non serve a molto ','A',1),
+(default,'A quasi nulla','B',1),
+(default,'Per reperire piu facilmente informazioni nella cpu','C',1),
+(default,'Che t avevo detto tommaso','D',1),
+(default,'Con un Scambio diretto di informazioni tra ram e cpu','A',2),
+(default,'Con un scambio diretto di informazioni tra monitor cpu','B',2),
+(default,'Con la tecnologia a SetAssociative','C',2),
+(default,'Mediante l utilizzo di flip flop','D',2);
+
+/*
+  ---------------------------------
+    !INSERT->TABLE->QUIZAPERTA!
+  ---------------------------------
+*/
+INSERT INTO  quizaperta VALUES
+(default,'Come si chiama quella congettura per cui tutti i numeri pari maggiori di 4 sono la somma di 2 numeri primi?','Si chiama congettura di Goldbach',100,0,3,2),
+(default,'Quali sono i principali flip flop che abbiamo studiato?','Set-Reset , JK, TIPO T, TIPO D',100,0,3,7);
