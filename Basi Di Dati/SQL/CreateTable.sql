@@ -362,37 +362,37 @@ INSERT INTO studente VALUES
 ---------------------------------
 */
 INSERT INTO test VALUES
-(default,'Prova di Analisi I -Funzioni',120,10,'05/01/2022','D2442'),
-(default,'Prova di Analisi I -Teoria',60,6,'05/09/2022','D2442'),
-(default,'Prova di Analisi I -Serie',120,12,'05/13/2022','D2442'),
-(default,'Diritto Privato',120,15,'06/15/2022','D2732'),
-(default,'Diritto Penale',120,10,'06/19/2022','D2732'),
-(default,'Filosofia del Diritto',100,10,'06/18/2022','D2732'),
+(default,'Prova di Analisi I -Funzioni',120,4,'05/01/2022','D2442'),
+(default,'Prova di Analisi I -Teoria',60,2,'05/09/2022','D2442'),
+(default,'Prova di Analisi I -Serie',120,3,'05/13/2022','D2442'),
+(default,'Diritto Privato',120,4,'06/15/2022','D2732'),
+(default,'Diritto Penale',120,3,'06/19/2022','D2732'),
+(default,'Filosofia del Diritto',100,3,'06/18/2022','D2732'),
 (default,'Architettura degli Elaboratori -Prima parte',120,3,'06/20/2022','D1432'),
-(default,'Architettura degli Elaboratori -Seconda parte',120,15,'06/25/2022','D1432'),
-(default,'Architettura degli Elaboratori -Terza parte',100,6,'06/24/2022','D1432'),
-(default,'CITOLOGIA ED ISTOLOGIA E LABORATORIO',200,20,'06/22/2022','D9934'),
-(default,'ENDOCRINOLOGIA APP. SOSTANZE STUPEFACENTI',120,15,'06/15/2022','D9934'),
-(default,'APPLICAZIONI IN BIOINFORMATICA',100,15,'06/20/2022','D9442'),
-(default,'BIOLOGIA MOLECOLARE FORENSE',200,15,'06/22/2022','D9442'),
-(default,'Laboratorio di Programmazione',120,5,'06/15/2022','D2311'),
+(default,'Architettura degli Elaboratori -Seconda parte',120,3,'06/25/2022','D1432'),
+(default,'Architettura degli Elaboratori -Terza parte',100,3,'06/24/2022','D1432'),
+(default,'CITOLOGIA ED ISTOLOGIA E LABORATORIO',200,4,'06/22/2022','D9934'),
+(default,'ENDOCRINOLOGIA APP. SOSTANZE STUPEFACENTI',120,2,'06/15/2022','D9934'),
+(default,'APPLICAZIONI IN BIOINFORMATICA',100,3,'06/20/2022','D9442'),
+(default,'BIOLOGIA MOLECOLARE FORENSE',200,3,'06/22/2022','D9442'),
+(default,'Laboratorio di Programmazione',120,3,'06/15/2022','D2311'),
 (default,'Test studenti 2019',100,3,'06/19/2022','D2311'),
-(default,'ANALISI DEL RISCHIO CREDITIZIO',100,10,'06/10/2022','D4231'),
-(default,'EVOLUTION OF FINANCIAL MARKETS',120,20,'06/12/2022','D4231'),
-(default,'FONDAMENTI DI AGRONOMIA',100,10,'06/13/2022','D2422'),
-(default,'LABORATORIO DI COLTIVAZIONE DELLE PIANTE',60,6,'06/10/2022','D2422'),
-(default,'PERFORMANCE MANAGEMENT SYSTEMS',120,13,'06/24/2022','D6242'),
-(default,'ECONOMIA -Prima Parte',100,10,'06/23/2022','D6242'),
-(default,'ECONOMIA -Seconda Parte',100,10,'01/22/2023','D6242'),
-(default,'Chirurgia Generale',120,12,'02/24/2022','D3321'),
-(default,'Chirurgia di Urgenza',200,15,'02/26/2022','D3321'),
-(default,'Prima prova General Surgery',120,10,'02/10/2022','D3321'),
-(default,'Seconda prova General Surgery',120,10,'02/10/2022','D3321'),
-(default,'Fisica Nucleare -Uno',120,13,'02/11/2022','D4715'),
-(default,'Fisica Nucleare -Due',140,15,'02/14/2022','D4715'),
-(default,'Metodologie Nucleari in RadioFarmacia I',160,20,'01/17/2022','D8513'),
-(default,'Metodologie Nucleari in RadioFarmacia II',200,20,'01/22/2022','D8513'),
-(default,'Biologia Generale Primo Test',60,10,'02/15/2022','D9934');
+(default,'ANALISI DEL RISCHIO CREDITIZIO',100,3,'06/10/2022','D4231'),
+(default,'EVOLUTION OF FINANCIAL MARKETS',120,3,'06/12/2022','D4231'),
+(default,'FONDAMENTI DI AGRONOMIA',100,2,'06/13/2022','D2422'),
+(default,'LABORATORIO DI COLTIVAZIONE DELLE PIANTE',60,3,'06/10/2022','D2422'),
+(default,'PERFORMANCE MANAGEMENT SYSTEMS',120,3,'06/24/2022','D6242'),
+(default,'ECONOMIA -Prima Parte',100,2,'06/23/2022','D6242'),
+(default,'ECONOMIA -Seconda Parte',100,3,'01/22/2023','D6242'),
+(default,'Chirurgia Generale',120,3,'02/24/2022','D3321'),
+(default,'Chirurgia di Urgenza',200,3,'02/26/2022','D3321'),
+(default,'Prima prova General Surgery',120,2,'02/10/2022','D3321'),
+(default,'Seconda prova General Surgery',120,2,'02/10/2022','D3321'),
+(default,'Fisica Nucleare -Uno',120,3,'02/11/2022','D4715'),
+(default,'Fisica Nucleare -Due',140,3,'02/14/2022','D4715'),
+(default,'Metodologie Nucleari in RadioFarmacia I',160,3,'01/17/2022','D8513'),
+(default,'Metodologie Nucleari in RadioFarmacia II',200,3,'01/22/2022','D8513'),
+(default,'Biologia Generale Primo Test',60,3,'02/15/2022','D9934');
 
 /*
 ---------------------------------
@@ -436,7 +436,11 @@ INSERT INTO insegnamento VALUES
 */
 INSERT INTO quizmultipla VALUES
 (default,'C','A cosa serve una Memoria Cache?',1,0,7),
-(default,'A','Come si ottengono prestazioni migliori con le Cache?',1,0,7);
+(default,'A','Come si ottengono prestazioni migliori con le Cache?',1,0,7),
+(default,'A','La differenza tra Architettura RISC e CISC',1,0,7),
+(default,'B','Quale tra le seguenti affermazioni è corretta?',1,0,1),
+(default,'A','Quale tra queste è la definizione corretta di funzione?',1,0,1),
+(default,'A','Una funzione monotona è...',1,0,1);
 /*
   ---------------------------------
     !INSERT->TABLE->RISPOSTA!
@@ -459,4 +463,5 @@ INSERT INTO RISPOSTA values
 */
 INSERT INTO  quizaperta VALUES
 (default,'Come si chiama quella congettura per cui tutti i numeri pari maggiori di 4 sono la somma di 2 numeri primi?','Si chiama congettura di Goldbach',100,0,3,2),
-(default,'Quali sono i principali flip flop che abbiamo studiato?','Set-Reset , JK, TIPO T, TIPO D',100,0,3,7);
+(default,'Quali sono i principali flip flop che abbiamo studiato?','Set-Reset , JK, TIPO T, TIPO D',100,0,3,7),
+(default,'Indica brevemente una definizione di studio di funzione','Indica una applicazione pratica dei teoremi e delle tecniche del calcolo infinitesimale nello specifico caso di una funzione di cui è nota una espressione analitica',0,2,1);
