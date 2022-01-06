@@ -368,7 +368,7 @@ INSERT INTO test VALUES
 (default,'Diritto Privato',120,15,'06/15/2022','D2732'),
 (default,'Diritto Penale',120,10,'06/19/2022','D2732'),
 (default,'Filosofia del Diritto',100,10,'06/18/2022','D2732'),
-(default,'Architettura degli Elaboratori -Prima parte',120,15,'06/20/2022','D1432'),
+(default,'Architettura degli Elaboratori -Prima parte',120,3,'06/20/2022','D1432'),
 (default,'Architettura degli Elaboratori -Seconda parte',120,15,'06/25/2022','D1432'),
 (default,'Architettura degli Elaboratori -Terza parte',100,6,'06/24/2022','D1432'),
 (default,'CITOLOGIA ED ISTOLOGIA E LABORATORIO',200,20,'06/22/2022','D9934'),
