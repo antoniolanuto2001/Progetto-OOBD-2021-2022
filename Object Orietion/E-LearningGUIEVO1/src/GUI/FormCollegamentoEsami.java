@@ -22,6 +22,8 @@ public class FormCollegamentoEsami extends JPanel
 	public JLabel UtenteTest;
 	public String nomeTestPerCollegamentoString;
 	public String utentePerCollegamentoString ;
+	public int indexStudente;
+	public String CodFiscaleDocenteDaCodice;
 	public FormCollegamentoEsami(Controller c,JFrame framecorrente) 
 	{
 		
@@ -72,7 +74,7 @@ public class FormCollegamentoEsami extends JPanel
 		UtenteTest.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 11));
 		add(UtenteTest);
 		
-		JButton InvioVersoTest = new JButton("Vai Al Quiz");
+		JButton InvioVersoTest = new JButton("Sostieni Test");
 		
 		InvioVersoTest.setForeground(Color.WHITE);
 		InvioVersoTest.setBackground(new Color(255, 102, 102));
@@ -82,15 +84,17 @@ public class FormCollegamentoEsami extends JPanel
 		InvioVersoTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				JFrame frameSvolgiQuiz=new SvolgiQuiz(controller,frame,nomeTestPerCollegamentoString,utentePerCollegamentoString);
+				JFrame frameSvolgiQuiz=new SvolgiQuiz(controller,frame,nomeTestPerCollegamentoString,utentePerCollegamentoString,indexStudente,CodFiscaleDocenteDaCodice);
 				frame.setVisible(false);
 				frameSvolgiQuiz.setVisible(true);
 			}
 		});
 	}
-	public void CollegamentoValori(String n,String u)
+	public void CollegamentoValori(String nomeTest,String CodFiscaleAutoreTest,int indexStudenteDacodice,String CodFiscaleDocente)
 	{
-		nomeTestPerCollegamentoString=n;
-		utentePerCollegamentoString=u;
+		nomeTestPerCollegamentoString=nomeTest;
+		utentePerCollegamentoString=CodFiscaleAutoreTest;
+		indexStudente=indexStudenteDacodice;
+		CodFiscaleDocenteDaCodice=CodFiscaleDocente;
 	}
 }

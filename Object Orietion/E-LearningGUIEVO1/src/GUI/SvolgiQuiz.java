@@ -10,11 +10,14 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.eclipse.osgi.internal.debug.Debug;
+import org.eclipse.swt.internal.ole.win32.IDataObject;
 
 import Controller.Controller;
+import Model.Quiz;
 import Model.Test;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,6 +45,7 @@ public class SvolgiQuiz extends JFrame {
 	public JTextField MultiplaRisposta[] = new JTextField[100];
 	public int aggiornaY;
 	public int PosizioneY;
+	public FormVisualQuiz[] quiz= new FormVisualQuiz[100];
 	
 	
 	/**
@@ -51,15 +55,16 @@ public class SvolgiQuiz extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SvolgiQuiz(Controller c,JFrame frameChiamante,String nomeTest,String UtenteTest) 
+	public SvolgiQuiz(Controller c,JFrame frameChiamante,String nomeTest,String UtenteTest,int IndexStudente,String codFiscaleDocente) 
 	{
 		frame=this;
 		controller=c;
 		PosizioneY=20;
+		
 		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images/logoPrincipale.png"));
 		frame.setIconImage(logo.getImage());
 		int index=controller.returnIndexListaTest(nomeTest, UtenteTest);
-		System.out.println("Ho preso il testo con index "+index);
+		
 		try {
 			provaTest =controller.ReturnCopiaOfTest(index);
 		} 
@@ -117,7 +122,7 @@ public class SvolgiQuiz extends JFrame {
 		CognomeLabel.setBounds(127, 27, 129, 24);
 		PanelInformazioni.add(CognomeLabel);
 		
-		JLabel Insegnante = new JLabel("Insegnante");
+		JLabel Insegnante = new JLabel("Studente");
 		Insegnante.setForeground(Color.WHITE);
 		Insegnante.setBounds(70, 46, 106, 24);
 		PanelInformazioni.add(Insegnante);
@@ -131,7 +136,7 @@ public class SvolgiQuiz extends JFrame {
 		});
 		ArrayList utenteArrayList = new ArrayList();
 		//TODO al posto del index 0 ci vuole index giusto per estrarre utente giusto
-		utenteArrayList = controller.getUtente(0);
+		utenteArrayList = controller.getUtente(IndexStudente);
 		NomeLabel.setText((String) utenteArrayList.get(0));
 		CognomeLabel.setText((String) utenteArrayList.get(1));
 		String codiceString=(String) utenteArrayList.get(2);
@@ -181,7 +186,7 @@ public class SvolgiQuiz extends JFrame {
 		scrollPane.setBounds(60, 190, 962, 471);
 		
 		
-		FormVisualQuiz[] quiz= new FormVisualQuiz[100];
+		
 		for (int i = 0; i < provaTest.QuizPresenti.size(); i++) 
 		{
 			if (provaTest.QuizPresenti.get(i).getTipologiaTest().contentEquals("A"))
@@ -190,6 +195,7 @@ public class SvolgiQuiz extends JFrame {
 				quiz[i]=new FormVisualQuiz();
 				quiz[i].NumeroQuiz.setText(s);
 				String spitTotaleString=provaTest.QuizPresenti.get(i).Domande.get(0).Domanda;
+				quiz[i].contengoOriginaleApertaString=spitTotaleString;
 				if(spitTotaleString.length()>50)
 				{
 					int half = spitTotaleString.length() % 2 == 0 ? spitTotaleString.length()/2 : spitTotaleString.length()/2 + 1;
@@ -219,7 +225,21 @@ public class SvolgiQuiz extends JFrame {
 				String s=String.valueOf(i+1);
 				quiz[i]=new FormVisualQuiz();
 				quiz[i].NumeroQuiz.setText(s);
-				quiz[i].DomandaEffettivaLabel.setText(provaTest.QuizPresenti.get(i).Domande.get(0).Domanda);
+				String domanadaSplitTotaleString=provaTest.QuizPresenti.get(i).Domande.get(0).Domanda;
+				quiz[i].contengoOriginaleMultiplaString=domanadaSplitTotaleString;
+				System.out.println("Domanda"+quiz[i].contengoOriginaleMultiplaString);
+				if(domanadaSplitTotaleString.length()>50)
+				{
+					int half = domanadaSplitTotaleString.length() % 2 == 0 ? domanadaSplitTotaleString.length()/2 : domanadaSplitTotaleString.length()/2 + 1;
+					String first = domanadaSplitTotaleString.substring(0, half);
+					String second = domanadaSplitTotaleString.substring(half);
+					quiz[i].DomandaEffettivaLabel.setText("<html><body>"+first+"<br>"+second+"</body></html>");
+				}
+				else
+				{
+					quiz[i].DomandaEffettivaLabel.setText(domanadaSplitTotaleString);
+				}
+				
 				quiz[i].risposteMultipleGruppo= new ButtonGroup();
 				quiz[i].add(quiz[i].RispostaMultiplaLabelPrinciapale);
 				for (int j = 1; j < provaTest.QuizPresenti.get(i).Domande.size(); j++) 
@@ -265,7 +285,78 @@ public class SvolgiQuiz extends JFrame {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	    scrollPane.setViewportView(PanelDoveStannoQuiz);
 	    InformazioniPreliminari.add(scrollPane);
-		//InformazioniPreliminari.add(quiz);
-		
+	    
+	    
+	    JButton CompleteButton = new JButton("Completato");
+	    CompleteButton.addActionListener(new ActionListener() 
+	    {
+	    	
+	    	public void actionPerformed(ActionEvent e) 
+	    	{
+	    		boolean ReadyForCorrection=true;
+	    		for (int j = 0; j < provaTest.QuizPresenti.size(); j++) 
+	    		{
+	    			if (provaTest.QuizPresenti.get(j).getTipologiaTest().contentEquals("A"))
+	    			{
+	    				
+	    				String controllo=quiz[j].RispostaApertaTextArea.getText();
+	    				
+	    				if(controllo.length()<=0)
+	    				{
+	    					JOptionPane.showMessageDialog(null,"Compleata Prima tutte le risposte Aperte","Errore Risposta",JOptionPane.INFORMATION_MESSAGE);
+	    					ReadyForCorrection=false;
+	    					break;
+	    				}
+	    			}
+	    			if (provaTest.QuizPresenti.get(j).getTipologiaTest().contentEquals("M"))
+	    			{
+	    				Boolean selezionato=isSelection(quiz[j].risposteMultipleGruppo);
+	    				
+	    				if(selezionato==false)
+	    				{
+	    					JOptionPane.showMessageDialog(null,"Compleata Prima tutte le risposte Multiple","Errore Risposta",JOptionPane.INFORMATION_MESSAGE);
+	    					ReadyForCorrection=false;
+	    					break;
+	    				}
+					}
+				}
+	    		if (ReadyForCorrection==true) 
+	    		{
+	    			
+	    			int indexResult=controller.AggiungiRisultatoTestalDB(nomeTest, codFiscaleDocente, codiceString);
+	    			for (int j = 0; j < provaTest.QuizPresenti.size(); j++) 
+		    		{
+		    			if (provaTest.QuizPresenti.get(j).getTipologiaTest().contentEquals("A"))
+		    			{
+		    				
+		    				controller.AggiungiValutazioneAlDB("Aperta", (String)quiz[j].RispostaApertaTextArea.getText(), "", (String) quiz[j].contengoOriginaleApertaString, nomeTest,codFiscaleDocente,codiceString,indexResult);
+		    				
+		    			}
+		    			else 
+		    			{
+		    				String letteraInseritaString = null;
+		    				for (int z = 1; z < provaTest.QuizPresenti.get(j).Domande.size(); z++) 
+		    				{
+		    					if (quiz[j].RispostaMultiplaRadioButton[z].isSelected()) 
+		    					{
+		    						letteraInseritaString=quiz[j].RisposteMultipleLabel[z].getText();
+								}
+		    				}
+		    				controller.AggiungiValutazioneAlDB("Multipla", "", letteraInseritaString, (String) quiz[j].contengoOriginaleMultiplaString, nomeTest,codFiscaleDocente,codiceString,indexResult);
+						}
+					}
+	    			frameChiamante.setVisible(true);
+					frame.setVisible(false);
+					frame.dispose();
+	    		}
+	    	}
+	    });
+	    CompleteButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+	    CompleteButton.setBounds(433, 138, 141, 41);
+	    InformazioniPreliminari.add(CompleteButton);
+	}
+	public boolean isSelection(ButtonGroup buttonGroup) 
+	{
+	    return (buttonGroup.getSelection() != null);
 	}
 }

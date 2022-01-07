@@ -195,8 +195,9 @@ public class TestDaoImplementazionePostgres implements TestDAO
 			}
 			else 
 			{
-				PreparedStatement queryAggiugngiQuizM= connection.prepareStatement("INSERT INTO quizmultipla VALUES\r\n"
-						+ "(default,'"+Domanda+"',"+punteggioP+","+PunteggioN+","+numeroTest+")");
+				
+				PreparedStatement queryAggiugngiQuizM= connection.prepareStatement("INSERT INTO quizmultipla VALUES "
+						+ "(default,'"+Risposta+"','"+Domanda+"',"+punteggioP+","+PunteggioN+","+numeroTest+")");
 				queryAggiugngiQuizM.executeUpdate();
 			}
 		} 
@@ -206,7 +207,7 @@ public class TestDaoImplementazionePostgres implements TestDAO
 		}		
 	}
 	@Override
-	public void AggiungiRisposta(String risposta) 
+	public void AggiungiRisposta(String Domanda,String risposta) 
 	{
 		// TODO Auto-generated method stub
 		PreparedStatement QueryRecuperoTest;
@@ -215,8 +216,9 @@ public class TestDaoImplementazionePostgres implements TestDAO
 			ResultSet rSet = QueryRecuperoTest.executeQuery();
 			rSet.next();
 			int numeroQuiz=rSet.getInt("idquizm");
+			System.out.println("Domanda vale :"+Domanda);
 			PreparedStatement queryAggiungiRispoStatement=connection.prepareStatement("INSERT INTO RISPOSTA values\r\n"
-					+ "(default,'"+risposta+"',"+numeroQuiz+")");
+					+ "(default,'"+risposta+"','"+Domanda+"',"+numeroQuiz+")");
 			queryAggiungiRispoStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

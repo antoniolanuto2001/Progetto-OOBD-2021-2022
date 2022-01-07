@@ -251,12 +251,24 @@ public class Register extends JFrame {
 		SessoLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		SessoLabel.setBounds(441, 223, 46, 14);
 		FormRegistrazione.add(SessoLabel);
+		
+		JLabel DipartimentoLabel = new JLabel("Dipartimenti : ");
+		DipartimentoLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		DipartimentoLabel.setBounds(24, 352, 82, 21);
+		FormRegistrazione.add(DipartimentoLabel);
+		
+		JLabel CDLLabel = new JLabel("Corso Di Laurea : ");
+		CDLLabel.setVisible(false);
+		CDLLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		CDLLabel.setBounds(15, 388, 96, 27);
+		FormRegistrazione.add(CDLLabel);
 		StudenteCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				if(StudenteCheckBox.isSelected())
 				{
 					CorsoDiLaureaComboBox.setVisible(true);
+					CDLLabel.setVisible(true);
 				}
 				
 			}
@@ -267,6 +279,7 @@ public class Register extends JFrame {
 				if(DocenteCheckBox.isSelected())
 				{
 					CorsoDiLaureaComboBox.setVisible(false);
+					CDLLabel.setVisible(false);
 				}
 				
 			}
@@ -276,24 +289,50 @@ public class Register extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{	
 				Boolean passBoolean=isValid((String)PasswordField.getText());
-				Boolean emailBoolean=isValidEmail((String)Emailfield.getText());;
-				if(passBoolean==false)
+				Boolean emailBoolean=isValidEmail((String)Emailfield.getText());
+				Boolean nomeBoolean=isValidnome((String)NomeField.getText());
+				Boolean cognomeBoolean=isValidcognome((String)CognomeField.getText());
+				Boolean codfiscaleBoolean=isValidcodfiscale((String)CodfiscaleField.getText());
+				if (nomeBoolean==false) 
 				{
-					JOptionPane.showMessageDialog(null,"Passowrd Invalida","Errore Password",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Nome non Inserito","Errore Nome",JOptionPane.INFORMATION_MESSAGE);
+				}
+				else if (cognomeBoolean==false) 
+				{
+					JOptionPane.showMessageDialog(null,"Cognome non Inserito","Errore Cognome",JOptionPane.INFORMATION_MESSAGE);
+				}
+				else if (codfiscaleBoolean==false) 
+				{
+					JOptionPane.showMessageDialog(null,"Codfiscale non Inserito","Errore Codfiscale",JOptionPane.INFORMATION_MESSAGE);
 				}
 				else if (emailBoolean==false)
 				{
 					JOptionPane.showMessageDialog(null,"Email Invalida","Errore email",JOptionPane.INFORMATION_MESSAGE);
 				}
-				else 
+				else if(passBoolean==false)
+				{
+					JOptionPane.showMessageDialog(null,"Password Invalida","Errore Password",JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+				else //Tutto Corretto
 				{
 					if(StudenteCheckBox.isSelected())
 					{
-						
+						controller.AggiungiUtenteAlDB("Studente", (String)NomeField.getText(), (String)CognomeField.getText(), (String)Emailfield.getText(), (String)PasswordField.getText(), (String)DiparmenticomboBox.getSelectedItem(), (String)CorsoDiLaureaComboBox.getSelectedItem(), (String)SessoComboBox.getSelectedItem(),(String)CodfiscaleField.getText() ,(int)GiornoSpinner.getValue(), (int)MeseSpinner.getValue(),(int)YearSpinner.getValue());
+						frameChiamante.setVisible(true);
+						frame.setVisible(false);
+						frame.dispose();
 					}
 					else if(DocenteCheckBox.isSelected())
 					{
-						
+						controller.AggiungiUtenteAlDB("Docente", (String)NomeField.getText(), (String)CognomeField.getText(), (String)Emailfield.getText(), (String)PasswordField.getText(), (String)DiparmenticomboBox.getSelectedItem(), "", (String)SessoComboBox.getSelectedItem(),(String)CodfiscaleField.getText(),(int)GiornoSpinner.getValue(), (int)MeseSpinner.getValue(),(int)YearSpinner.getValue());
+						frameChiamante.setVisible(true);
+						frame.setVisible(false);
+						frame.dispose();
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null,"Devi Selezionare Almeno O Studente O Docente","Errore Select",JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
@@ -313,6 +352,36 @@ public class Register extends JFrame {
 	    boolean flag=true;
 	    if (!specailCharPatten.matcher(passwordhere).find()) {
 	    	//System.out.println("Password must have atleast one specail character !!");
+	        flag=false;
+	    }
+	    return flag;
+	}
+	public boolean isValidnome(String passwordhere) {
+
+	    
+	    boolean flag=true;
+	    if (passwordhere.length() < 1) {
+	    	//System.out.println("il campo nome deve essere compilato");
+	        flag=false;
+	    }
+	    return flag;
+	}
+	public boolean isValidcognome(String passwordhere) {
+
+	    
+	    boolean flag=true;
+	    if (passwordhere.length() < 1) {
+	    	//System.out.println("il campo cognome deve essere compilato");
+	        flag=false;
+	    }
+	    return flag;
+	}
+	public boolean isValidcodfiscale(String passwordhere) {
+
+	    
+	    boolean flag=true;
+	    if (passwordhere.length() < 16) {
+	    	//System.out.println("il campo codfiscale deve essere compilato");
 	        flag=false;
 	    }
 	    return flag;

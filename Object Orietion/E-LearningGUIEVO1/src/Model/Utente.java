@@ -1,11 +1,12 @@
 package Model;
 import java.util.*;
-public class Utente 
+public class Utente implements Cloneable
 {
 	private String Nome;
 	private String Cognome;
 	private Data Datadinascita;
 	private String CodiceFiscale;
+	public ArrayList <RisultatoTest>ListaRisultati;
 	
 	public Utente(String n,String c,Data data, String cod) {
 		// TODO Auto-generated constructor stub
@@ -13,6 +14,7 @@ public class Utente
 		setCognome(c);
 		setDatadinascita(data);
 		setCodiceFiscale(cod);
+		ListaRisultati = new ArrayList<RisultatoTest>();
 	}
 
 	public String getCodiceFiscale() {
@@ -46,5 +48,8 @@ public class Utente
 	public void setNome(String nome) {
 		Nome = nome;
 	}
-
+	public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
 }

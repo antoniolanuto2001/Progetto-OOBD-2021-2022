@@ -22,6 +22,8 @@ public class FormVisualQuiz extends JPanel
 	public JLabel RispostaApertaLabel;
 	public JTextArea RispostaApertaTextArea;
 	public ButtonGroup risposteMultipleGruppo;
+	public String contengoOriginaleApertaString;
+	public String contengoOriginaleMultiplaString;
 
 	
 	public FormVisualQuiz() 

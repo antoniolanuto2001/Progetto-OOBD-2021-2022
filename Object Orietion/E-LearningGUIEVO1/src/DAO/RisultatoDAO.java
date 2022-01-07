@@ -1,0 +1,13 @@
+package DAO;
+
+import Model.Utente;
+
+public interface RisultatoDAO 
+{
+	void AggiungiValutazionePrePost(String Table,String RispostaInserita,String LetteraInserita,String DomandaRicostruente,String nomeTest,String CodDocente,String Codstudente,int Idrisultato);
+	int AggiungiRisultatoTest(String nomeTest,String CodDocente,String Codstudente);
+	int CountRisultato(String Utente);
+	void ResulDaDb(Utente UtenteDaAggiungere);
+	String RisultatoNome(int index);
+	
+}
