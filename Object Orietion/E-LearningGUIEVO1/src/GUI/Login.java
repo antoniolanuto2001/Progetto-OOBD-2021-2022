@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,9 +22,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JRadioButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class Login extends JFrame {
 
@@ -70,9 +66,6 @@ public class Login extends JFrame {
 		frame.setBounds(100, 100, 1080, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		ImageIcon logo = new ImageIcon(this.getClass().getResource("/images/logoPrincipale.png"));
-		frame.setIconImage(logo.getImage());
-		
 		
 		JPanel LoginLeft = new JPanel();
 		LoginLeft.setBorder(new EmptyBorder(1, 1, 1, 1));
@@ -102,7 +95,7 @@ public class Login extends JFrame {
 		JLabel AccountLabel = new JLabel("");
 		AccountLabel.setBounds(147, 67, 100, 100);
 		panel_3.add(AccountLabel);
-		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/images/iconaAccount4.png"));
+		ImageIcon imgAccopuIcon = new ImageIcon(this.getClass().getResource("/iconaAccount4.png"));
 		AccountLabel.setIcon(imgAccopuIcon);
 		
 		JLabel lblNewLabel_1 = new JLabel("Portale d'accesso alla piattoforma  di Quiz!");
@@ -112,7 +105,6 @@ public class Login extends JFrame {
 		panel_3.add(lblNewLabel_1);
 		
 		JPanel panel_3_1 = new JPanel();
-		panel_3_1.setForeground(new Color(0, 0, 0));
 		panel_3_1.setBackground(Color.WHITE);
 		panel_3_1.setLayout(null);
 		panel_3_1.setBounds(37, 321, 408, 385);
@@ -173,7 +165,7 @@ public class Login extends JFrame {
 		
 		JLabel ProgrammaerLabel = new JLabel("");
 		ProgrammaerLabel.setBounds(-63, 172, 660, 453);
-		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/images/ImagePrincipal2.png"));
+		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/ImagePrincipal2.png"));
 		LoginRight.add(ProgrammaerLabel);
 		ProgrammaerLabel.setIcon(imgAccopuIcon2);
 		JButton ButtonLogin = new JButton("Login");
@@ -203,21 +195,6 @@ public class Login extends JFrame {
 		MostraCheckBox.setBounds(38, 214, 125, 23);
 		panel_3_1.add(MostraCheckBox);
 		
-		JLabel RegisterLabel = new JLabel("Non hai un Account? Registrati");
-		RegisterLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				JFrame frameCreaRegister=new Register(controller,frame);
-				frame.setVisible(false);
-				frameCreaRegister.setVisible(true);
-			}
-		});
-		RegisterLabel.setForeground(new Color(0, 102, 255));
-		RegisterLabel.setFont(new Font("Segoe UI", Font.BOLD, 11));
-		RegisterLabel.setBounds(212, 216, 168, 17);
-		panel_3_1.add(RegisterLabel);
-		
 	
 	
 		ButtonLogin.addActionListener(new ActionListener() {
@@ -226,30 +203,23 @@ public class Login extends JFrame {
 				//TODO Metodo al solo scopo di Debug Per implementazione Finale Connessione e metodo esterno DB
 				String emailString=EmailText.getText();
 				String passwordString=passwordField.getText();
-				int result=controller.VerificaUtente(emailString,passwordString);
-				System.out.println("result tornato "+result);
-				if (result==0||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))||(emailString.contentEquals("c")&&passwordString.contentEquals("c"))) 
+				if ((emailString.contentEquals("an.lanuto@studenti.unina.it")&&passwordString.contentEquals("prova"))||(emailString.contentEquals("e.prosciutto@studenti.unina.it")&&passwordString.contentEquals("123abc456"))||(emailString.contentEquals("c")&&passwordString.contentEquals("c"))) 
 				{
-					
+					controller.aggiungiUtente("Antonio", "Lanuto", 29, 9, 2001, "LNTntN01p29f839r");
 					//TODO Aggiunta Manuale Da fare Dinamica Con query da Database
-					EmailText.setText("");
-					passwordField.setText("");
 					JFrame frameInsegnante=new InsegnanteGUI(controller,frame,emailString);
 					frame.setVisible(false);
 					frameInsegnante.setVisible(true);	
 				}
-				else if (result==1||(emailString.contentEquals("a")&&passwordString.contentEquals("a"))) 
+				else if ((emailString.contentEquals("marco.pastore6@studenti.unina.it")&&passwordString.contentEquals("cammarota"))||(emailString.contentEquals("a")&&passwordString.contentEquals("a"))) 
 				{
-					JFrame frameStudente=new StudenteGUI(controller,frame,emailString);
-					EmailText.setText("");
-					passwordField.setText("");
+					controller.aggiungiUtente("Marco", "Pastore", 6, 8, 2001, " PSTMRC01M06F839K");
+					JFrame frameStudente=new StudenteGUI(controller,frame);
 					frame.setVisible(false);
 					frameStudente.setVisible(true);
 				}
-				else 
-				{
-					JOptionPane.showMessageDialog(null,"Email Invalida","Errore Login",JOptionPane.INFORMATION_MESSAGE);
-				}
+				
+				
 			}
 		});
 		

@@ -1,15 +1,6 @@
 package Controller;
 
 import java.util.ArrayList;
-
-import org.eclipse.jface.preference.StringButtonFieldEditor;
-
-import DAO.RegisterDAO;
-import DAO.TestDAO;
-import DAO.UtenteDao;
-import ImplementazionePostgresDAO.RegisterDaoImplementazioneDAO;
-import ImplementazionePostgresDAO.TestDaoImplementazionePostgres;
-import ImplementazionePostgresDAO.UtenteImplementazioneDAO;
 import Model.Utente;
 import Model.Data;
 import Model.Domanda;
@@ -21,11 +12,9 @@ public class Controller
 	private ArrayList<Utente> ListaUtenti;
 	private ArrayList<Test>ListaTest;
 	
-	public int PrimoAccessoController;
 	
 	public Controller()
 	{
-		PrimoAccessoController=0;
 		ListaTest =new ArrayList<Test>();
 		ListaUtenti = new ArrayList<Utente>();
 	}
@@ -34,7 +23,7 @@ public class Controller
 	{	
 		ListaUtenti.add(new Utente(n, c, (new Data(g, m, a)), cod));
 	}
-	public void aggiungiTest(String Nome,String codiceString,int gio, int mese, int anno)
+	public void aggiungiTest(String Nome,String codiceString)
 	{	
 		int i=-1;
 		for (int j = 0; j < ListaUtenti.size(); j++) 
@@ -46,7 +35,7 @@ public class Controller
 			}
 		}
 		System.out.println("Ho preso index "+i);
-		ListaTest.add(new Test(Nome, ListaUtenti.get(i),new Data(gio, mese, anno)));
+		ListaTest.add(new Test(Nome, ListaUtenti.get(i)));
 		System.out.println("Test Creato Forza Capooo");
 	}
 	public void addQuizToTest(int punteggioP,int negativoN,String modalita) 
@@ -72,8 +61,7 @@ public class Controller
 		else 
 		{
 			ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).AggiungiDomanda(new Domanda(Domanda, Risposta));		
-		}	
-		
+		}		
 	}
 	public void Debug()
 	{
@@ -88,148 +76,18 @@ public class Controller
 			System.out.println("Risposta: "+ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Riposta);
 		}
 	}
-	public void Recuperadipartimenti(String []diparimenti)
-	{
-		RegisterDAO recuperaDipartimentiDao= new RegisterDaoImplementazioneDAO();
-		recuperaDipartimentiDao.RecuperaDiparmenti(diparimenti);
-		
-	}
-	public int SizeTestArrayList()
-	{
-		int size=ListaTest.size();
-		return size;
-		
-	}
-	public void AggiungiTestalDb()
-	{
-		
-		if(ListaTest.size()==0)
-		{
-			String codiceFiscaleString=ListaTest.get(0).OwenerUtente.getCodiceFiscale();
-			String nomeTestString=ListaTest.get(0).getNomeTest();
-			int Giorno=ListaTest.get(0).scandenzaData.getGiorno();
-			int Mese=ListaTest.get(0).scandenzaData.getMese();
-			int Anno=ListaTest.get(0).scandenzaData.getAnno();
-			TestDAO AggTestDB=  new TestDaoImplementazionePostgres();
-			AggTestDB.AggiugiTestAlDB(codiceFiscaleString, nomeTestString, Giorno, Mese, Anno);
-		}
-		else 
-		{
-			String codiceFiscaleString=ListaTest.get(ListaTest.size()-1).OwenerUtente.getCodiceFiscale();
-			String nomeTestString=ListaTest.get(ListaTest.size()-1).getNomeTest();
-			int Giorno=ListaTest.get(ListaTest.size()-1).scandenzaData.getGiorno();
-			int Mese=ListaTest.get(ListaTest.size()-1).scandenzaData.getMese();
-			int Anno=ListaTest.get(ListaTest.size()-1).scandenzaData.getAnno();
-			TestDAO AggTestDB=  new TestDaoImplementazionePostgres();
-			AggTestDB.AggiugiTestAlDB(codiceFiscaleString, nomeTestString, Giorno, Mese, Anno);
-		}
-		
-	}
-	public void AggiungiQuizAlDB(String modalitaString) 
-	{
-		if(ListaTest.size()==0)
-		{
-			String domanda=ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Domanda;
-			String risposta=ListaTest.get(0).QuizPresenti.get(0).Domande.get(0).Riposta;
-			int puntenggioP=ListaTest.get(0).QuizPresenti.get(0).Positivopunteggio;
-			int NegativoP=ListaTest.get(0).QuizPresenti.get(0).Negativopunteggio;
-			TestDAO AggQuizDB=  new TestDaoImplementazionePostgres();
-			AggQuizDB.AggiungiQuiz(modalitaString, domanda, risposta, puntenggioP, NegativoP);
-		}
-		else 
-		{
-			String domanda=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Domande.get(0).Domanda;
-			String risposta=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Domande.get(0).Riposta;
-			int puntenggioP=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Positivopunteggio;
-			int NegativoP=ListaTest.get(ListaTest.size()-1).QuizPresenti.get(ListaTest.get(ListaTest.size()-1).QuizPresenti.size()-1).Negativopunteggio;
-			
-			TestDAO AggQuizDB=  new TestDaoImplementazionePostgres();
-			AggQuizDB.AggiungiQuiz(modalitaString, domanda, risposta, puntenggioP, NegativoP);
-		}
-	}
-	public void AggiungiRipostaAlDB(String risposta)
-	{
-		TestDAO aggiungiRispostaDao= new TestDaoImplementazionePostgres();
-		aggiungiRispostaDao.AggiungiRisposta(risposta);
-		
-	}
-	public ArrayList getTestArrayList(int index)
-	{
-		ArrayList a = new ArrayList();
-		a.add(ListaTest.get(index).getNomeTest());
-		a.add(ListaTest.get(index).OwenerUtente.getNome());
-		a.add(ListaTest.get(index).OwenerUtente.getCognome());
-		return a;
-	}
 	public ArrayList getUtente(int index) 
-	{		
+	{
+		//TODO al posto di 0 ci andrebbe index
+		
 		ArrayList a = new ArrayList();
-		a.add(ListaUtenti.get(index).getNome());
-		a.add(ListaUtenti.get(index).getCognome());
-		a.add(ListaUtenti.get(index).getCodiceFiscale());
-		a.add(ListaUtenti.get(index).getDatadinascita().getGiorno());
-		a.add(ListaUtenti.get(index).getDatadinascita().getMese());
-		a.add(ListaUtenti.get(index).getDatadinascita().getAnno());
+		a.add(ListaUtenti.get(0).getNome());
+		a.add(ListaUtenti.get(0).getCognome());
+		a.add(ListaUtenti.get(0).getCodiceFiscale());
+		a.add(ListaUtenti.get(0).getDatadinascita().getGiorno());
+		a.add(ListaUtenti.get(0).getDatadinascita().getMese());
+		a.add(ListaUtenti.get(0).getDatadinascita().getAnno());
 		return a;
 	}
-	public void PrimoAccessoFlagOff()
-	{
-		PrimoAccessoController=1;
-	}
-    public void CretionTestFromDB() 
-    {
-    	TestDAO testprovaDao=new TestDaoImplementazionePostgres();
-    	ListaTest.addAll(testprovaDao.CreaUtenti(ListaUtenti));
-	}
-	public int returnIndexListaTest(String n,String u)
-    {
-    	int a=-1;
-    	for (int i = 0; i < ListaTest.size(); i++) 
-    	{
-    		if (ListaTest.get(i).OwenerUtente.getNome().contentEquals(u)&&ListaTest.get(i).getNomeTest().contentEquals(n))
-    		{
-    			a=i;
-    			return a;
-    		}
-		}
-    	return a;
-    }
-	public void RecuperaCDL(String[] Cdl)
-	{
-		RegisterDAO recuperaCDLDao= new RegisterDaoImplementazioneDAO();
-		recuperaCDLDao.RecuperaCdL(Cdl);
-	}
-    public int VerificaUtente(String email,String passString)
-    {
-    	UtenteDao DaoCarabiniere = new UtenteImplementazioneDAO();
-    	int result=DaoCarabiniere.controllaDao(email,passString);
-    	return result;
-    }
-    public int UtenteDatabaseCreation(String emailString,String Table)
-    {
-    	int index=-1;
-    	UtenteDao DaoIlControllore = new UtenteImplementazioneDAO();
-    	String codiceFiscaleString=DaoIlControllore.VedeSePresente(emailString);
-    	for (int i = 0; i < ListaUtenti.size(); i++) 
-    	{
-    		if (ListaUtenti.get(i).getCodiceFiscale().contentEquals(codiceFiscaleString))
-    		{
-    			index=i;
-    			return index;
-    		}
-		}
-    	if(index==-1)
-    	{
-    		ListaUtenti.add(DaoIlControllore.creaNuovoUtente(emailString,Table));
-    		index=ListaUtenti.size()-1;
-    		System.out.print("Prova nome "+ListaUtenti.get(index).getNome());
-    		return index;
-    	}
-		return index;
-    }
-	public Test ReturnCopiaOfTest(int Index) throws CloneNotSupportedException
-	{
-		Test nuovoTest= (Test) ListaTest.get(Index).clone();
-		return nuovoTest;
-	}
+	
 }
