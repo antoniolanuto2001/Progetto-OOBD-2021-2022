@@ -177,7 +177,7 @@ CREATE TABLE QUIZMULTIPLA
 	PunteggioRispostaCorretta INT,
 	PunteggioRispostaSbagliato INT,
 	IdtestRiferimento INT,
-
+	
 	PRIMARY KEY(IdQuizM),
 	FOREIGN KEY(IdtestRiferimento) REFERENCES TEST(IdTest)
 	ON DELETE CASCADE
@@ -245,7 +245,8 @@ CREATE TABLE VALUTAZIONERISPOSTAAPERTA
 	IdQuizA INT,
 
 	PRIMARY KEY (IdValutazioneAperta),
-	FOREIGN KEY(IdRisultatoTest) REFERENCES RISULTATOTEST(IdRisultatoTest),
+	FOREIGN KEY(IdRisultatoTest) REFERENCES RISULTATOTEST(IdRisultatoTest)
+	ON DELETE CASCADE,
 	FOREIGN KEY(IdDocente) REFERENCES DOCENTE(IdDocente),
 	FOREIGN KEY(Matricola) REFERENCES STUDENTE(Matricola),
 	FOREIGN KEY(IdQuizA) REFERENCES QUIZAPERTA(IdQuizA)
@@ -274,7 +275,8 @@ CREATE TABLE VALUTAZIONERISPOSTAMULTIPLA
 	IdQuizM INT,
 
 	PRIMARY KEY (IdValutazioneMultipla),
-	FOREIGN KEY(IdRisultatoTest) REFERENCES RISULTATOTEST(IdRisultatoTest),
+	FOREIGN KEY(IdRisultatoTest) REFERENCES RISULTATOTEST(IdRisultatoTest)
+	ON DELETE CASCADE,
 	FOREIGN KEY(Matricola) REFERENCES STUDENTE(Matricola),
 	FOREIGN KEY(IdQuizM) REFERENCES QUIZMULTIPLA(IdQuizM)
 );
@@ -437,10 +439,10 @@ INSERT INTO insegnamento VALUES
 INSERT INTO quizmultipla VALUES
 (default,'C','A cosa serve una Memoria Cache?',1,0,7),
 (default,'A','Come si ottengono prestazioni migliori con le Cache?',1,0,7),
-(default,'A','La differenza tra Architettura RISC e CISC',1,0,7),
+(default,'B','La differenza tra Architettura RISC e CISC',1,0,7),
 (default,'B','Quale tra le seguenti affermazioni è corretta?',1,0,1),
 (default,'A','Quale tra queste è la definizione corretta di funzione?',1,0,1),
-(default,'A','Una funzione monotona è...',1,0,1);
+(default,'B','Una funzione monotona è...',1,0,1);
 /*
   ---------------------------------
     !INSERT->TABLE->RISPOSTA!
@@ -454,7 +456,18 @@ INSERT INTO RISPOSTA values
 (default,'Con un Scambio diretto di informazioni tra ram e cpu','A',2),
 (default,'Con un scambio diretto di informazioni tra monitor cpu','B',2),
 (default,'Con la tecnologia a SetAssociative','C',2),
-(default,'Mediante l utilizzo di flip flop','D',2);
+(default,'Mediante l utilizzo di flip flop','D',2),
+(default,'Differenza Architetturale che permettere maggiore velocita','A',3),
+(default,'RISC set di istruzioni piccolo è ottimizzato CISC complesso ma piu ampio','B',3),
+(default,'Una parla con la cache e altra no','C',3),
+(default,'La guerra dei 100 anni in realta ne dura 40','A',4),
+(default,'Ippopotamo è ,l animale più pericoloso d Africa','B',4),
+(default,'Compito specifico, assegnato o riconosciuto nell ambito di un attività organizzata o di una struttura','A',5),
+(default,'Una corrispondenza che collega gli elmenti di 2 insiemi','B',5),
+(default,'Un Costrutto di programmazione che permette la chiamata a subroutine','C',5),
+(default,'Una funzione monotona e una funzione che ha una sola nota ','A',6),
+(default,'Una funzione che da un certo punto in poi chiamato Xo seguire un andamento costante discendente o crescente','B',6),
+(default,'Una funzione che solamente cresce sempre di valore in valore ','C',6);
 
 /*
   ---------------------------------
@@ -464,4 +477,145 @@ INSERT INTO RISPOSTA values
 INSERT INTO  quizaperta VALUES
 (default,'Come si chiama quella congettura per cui tutti i numeri pari maggiori di 4 sono la somma di 2 numeri primi?','Si chiama congettura di Goldbach',100,0,3,2),
 (default,'Quali sono i principali flip flop che abbiamo studiato?','Set-Reset , JK, TIPO T, TIPO D',100,0,3,7),
-(default,'Indica brevemente una definizione di studio di funzione','Indica una applicazione pratica dei teoremi e delle tecniche del calcolo infinitesimale nello specifico caso di una funzione di cui è nota una espressione analitica',0,2,1);
+(default,'Indica brevemente una definizione di studio di funzione','Indica una applicazione pratica dei teoremi e delle tecniche del calcolo infinitesimale nello specifico caso di una funzione di cui è nota una espressione analitica',300,0,2,1);
+
+/*
+    ---------------------------
+        !Funzioni - Triggers!
+    ---------------------------
+*/
+
+--------------------------------- Funzione Di Correzione Automatica Delle Domande A Risposta Multipla --------------------------------
+
+--Fase 1
+-----Creo Come prima cosa la funzione che aggiorna il punteggio del risultato del test --- 
+CREATE OR REPLACE FUNCTION CorreggiMultipla(ValidDaFunction valutazionerispostamultipla.idvalutazionemultipla%TYPE)
+RETURNS void 
+
+AS
+$CorreggiMultipla$
+DECLARE
+letteraCorrettaDaquery quizmultipla.letteracorretta%TYPE; 
+valutazioneMultipla valutazionerispostamultipla%ROWTYPE;
+quizMultiplo quizmultipla%ROWTYPE;
+idquizmDaquery quizmultipla.idquizm%TYPE;
+punteggioOttenutoNuovo int;
+
+BEGIN
+	SELECT * FROM valutazionerispostamultipla
+	INTO valutazioneMultipla WHERE idvalutazionemultipla=ValidDaFunction;
+	
+	idquizmDaquery:=valutazioneMultipla.idquizm;
+	 
+	
+	SELECT * FROM quizmultipla INTO quizMultiplo WHERE idquizm=idquizmDaquery;
+	
+	letteraCorrettaDaquery:=quizMultiplo.letteracorretta;
+	IF letteraCorrettaDaquery = valutazioneMultipla.letterainserita THEN
+	 	punteggioOttenutoNuovo:=quizmultiplo.punteggiorispostacorretta; 	
+		
+	ELSE
+	punteggioOttenutoNuovo:=quizmultiplo.punteggiorispostasbagliato; 
+	END IF;
+	UPDATE valutazionerispostamultipla
+	set punteggioottenuto=punteggioOttenutoNuovo
+	WHERE idvalutazionemultipla=ValidDaFunction; 
+
+	UPDATE risultatotest
+	SET punteggiototale=punteggiototale+punteggioOttenutoNuovo
+	WHERE idrisultatotest=valutazioneMultipla.idrisultatotest;
+	
+END;
+$CorreggiMultipla$ LANGUAGE plpgsql;
+--Fase 2
+-----Creo il trigger adetto al controllo del effettivo lancio della funzione --- 
+
+CREATE OR REPLACE FUNCTION TriggerCorreggiMultipla()
+  RETURNS TRIGGER 
+  AS
+$TriggerCorreggiMultipla$
+BEGIN
+	IF NEW.valutata=false THEN
+	PERFORM correggimultipla(NEW.idvalutazionemultipla);
+	UPDATE valutazionerispostamultipla
+	SET valutata = true 
+	WHERE idvalutazionemultipla=NEW.idvalutazionemultipla;
+	END IF;
+	RETURN NEW;
+END;
+$TriggerCorreggiMultipla$ LANGUAGE plpgsql;
+--Fase 3
+-----Creo il trigger vero e proprio lanciatore 
+CREATE TRIGGER correggiMultipleTriggerLanciatore
+after insert 
+on valutazionerispostamultipla
+FOR EACH ROW 
+EXECUTE PROCEDURE TriggerCorreggiMultipla();
+
+--------------------------------- Funzione Di Aggiornamento Della Correzione Delle Domande A Risposta Aperta --------------------------------
+
+--Fase 1
+-----Creo Come prima cosa la funzione che aggiorna il punteggio del risultato del test --- 
+CREATE OR REPLACE FUNCTION AggiornaPunteggioAperta(ValidDaFunction valutazionerispostaaperta.idvalutazioneaperta%TYPE)
+RETURNS void 
+
+AS
+$AggiornaPunteggioAperta$
+DECLARE 
+valutazioneaperta valutazionerispostaaperta%ROWTYPE;
+quizAperta quizaperta%ROWTYPE;
+idquizaDaquery quizaperta.idquiza%TYPE;
+punteggioOttenuto int;
+
+BEGIN
+	SELECT * FROM valutazionerispostaaperta
+	INTO valutazioneaperta WHERE idvalutazioneaperta=ValidDaFunction;
+	
+	idquizaDaquery:=valutazioneaperta.idquiza;
+	 
+	
+	SELECT * FROM quizaperta INTO quizAperta WHERE idquiza=idquizaDaquery;
+	
+
+	IF valutazioneaperta.PunteggioAssegnato<=quizAperta.PunteggioMassimo AND valutazioneaperta.PunteggioAssegnato>=quizAperta.PunteggioMinimo   THEN
+	 	punteggioOttenuto:=valutazioneaperta.PunteggioAssegnato; 	
+		
+	ELSE
+	raise notice 'Errore nell assegnazione del codice '; 
+	END IF;
+	UPDATE risultatotest
+	SET punteggiototale=punteggiototale+punteggioOttenuto
+	WHERE idrisultatotest=valutazioneaperta.idrisultatotest;
+	
+END;
+$AggiornaPunteggioAperta$ LANGUAGE plpgsql;
+--Fase 2
+-----Creo il trigger adetto al controllo del effettivo lancio della funzione 
+CREATE OR REPLACE FUNCTION TriggerCorreggiAperta()
+  RETURNS TRIGGER 
+
+  AS
+$TriggerCorreggiAperta$
+BEGIN
+	IF NEW.valutata=true THEN
+	PERFORM AggiornaPunteggioAperta(NEW.idvalutazioneaperta);
+	END IF;
+	RETURN NEW;
+END;
+$TriggerCorreggiAperta$   LANGUAGE PLPGSQL;
+--Fase 3
+-----Creo il trigger vero e proprio lanciatore ---
+create trigger CorreggiApertaLanciatore
+after UPDATE
+on valutazionerispostaaperta
+FOR EACH ROW 
+EXECUTE PROCEDURE TriggerCorreggiAperta();
+
+
+
+
+
+
+
+
+
