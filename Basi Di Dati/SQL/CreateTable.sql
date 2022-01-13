@@ -537,17 +537,6 @@ INSERT INTO test VALUES
 (default,'FONDAMENTI DI AGRONOMIA',100,3,'06/13/2022','D2422'),
 (default,'LABORATORIO DI COLTIVAZIONE DELLE PIANTE',60,3,'06/10/2022','D2422'),
 (default,'PERFORMANCE MANAGEMENT SYSTEMS',120,5,'06/24/2022','D6242'),
-(default,'ECONOMIA -Prima Parte',100,2,'06/23/2022','D6242'),
-(default,'ECONOMIA -Seconda Parte',100,3,'01/22/2023','D6242'),
-(default,'Chirurgia Generale',120,3,'02/24/2022','D3321'),
-(default,'Chirurgia di Urgenza',200,3,'02/26/2022','D3321'),
-(default,'Prima prova General Surgery',120,2,'02/10/2022','D3321'),
-(default,'Seconda prova General Surgery',120,2,'02/10/2022','D3321'),
-(default,'Fisica Nucleare -Uno',120,3,'02/11/2022','D4715'),
-(default,'Fisica Nucleare -Due',140,3,'02/14/2022','D4715'),
-(default,'Metodologie Nucleari in RadioFarmacia I',160,3,'01/17/2022','D8513'),
-(default,'Metodologie Nucleari in RadioFarmacia II',200,3,'01/22/2022','D8513'),
-(default,'Biologia Generale Primo Test',60,3,'02/15/2022','D9934');
 
 /*
 ---------------------------------
@@ -871,17 +860,6 @@ INSERT INTO Gestione VALUES
 (default,'CREAZIONE','2022-02-02 10:10:11','D2422',18),
 (default,'CREAZIONE','2022-02-02 11:40:42','D2422',19),
 (default,'CREAZIONE','2022-02-04 09:15:27','D6242',20),
-(default,'CREAZIONE','2022-02-04 09:23:30','D6242',21),
-(default,'CREAZIONE','2022-02-04 09:36:10','D6242',22),
-(default,'CREAZIONE','2022-02-04 10:15:37','D3321',23),
-(default,'CREAZIONE','2022-02-04 11:25:40','D3321',24),
-(default,'CREAZIONE','2022-02-04 12:26:11','D3321',25),
-(default,'CREAZIONE','2022-02-04 13:15:27','D3321',26),
-(default,'CREAZIONE','2022-02-06 09:24:13','D4715',27),
-(default,'CREAZIONE','2022-02-06 10:10:12','D4715',28),
-(default,'CREAZIONE','2022-02-09 11:14:01','D8513',29),
-(default,'CREAZIONE','2022-02-09 11:45:07','D8513',30),
-(default,'CREAZIONE','2022-02-09 08:00:15','D9934',31),
 (default,'MODIFICA','2022-01-02 07:20:10','D1432',7),
 (default,'MODIFICA','2022-01-01 15:32:20','D1432',8),
 (default,'MODIFICA','2022-01-01 19:20:33','D1432',9),
@@ -895,9 +873,5 @@ INSERT INTO Gestione VALUES
 (default,'MODIFICA','2022-01-10 17:24:16','D2732',6),
 (default,'MODIFICA','2022-02-05 09:13:11','D4231',16),
 (default,'MODIFICA','2022-02-03 09:40:48','D4231',17),
-(default,'MODIFICA','2022-02-09 11:55:27','D8513',29),
-(default,'MODIFICA','2022-02-11 11:25:32','D8513',30);
 
 /* ----------------------------------- */
-
-
