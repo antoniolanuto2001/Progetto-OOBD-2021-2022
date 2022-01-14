@@ -1,5 +1,6 @@
 
-<img src="java.jpg" align="right"/>
+
+
 # 📂 Files di progetto
 In questo README è presente una breve descrizione dei vari files riguardanti la parte di Object Orientation.
 
