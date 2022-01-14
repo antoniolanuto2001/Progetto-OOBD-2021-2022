@@ -5,6 +5,8 @@
 #### ↬ "Basi Di Dati": **_Progettazione e sviluppo di una Base di Dati Relazionale per l'E-Learning che consenta di gestire Test basati su Quiz_** 
 
 ## 📑 *Organizzazione e Scelte Progettuali*
+
+- Per la fase di modellazione si utilizzerà l'applicativo StarUML (file .mdj)
 - La condivisione del materiale avverrà tramite GitHub
 - L'ambiente di sviluppo per l'applicativo sarà Eclipse
 - Per la GUI dell'applicativo utilizzeremo Swing
