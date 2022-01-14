@@ -1,6 +1,6 @@
 
 
-<img src="icons8-java-60.png" align="right"/> 
+<img src="icons8-tazza-del-logo-java-128.png" align="right"/> 
 
 # 📂 Files di progetto
 In questo README è presente una breve descrizione dei vari files riguardanti la parte di Object Orientation.
