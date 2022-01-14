@@ -1,6 +1,7 @@
-<img src="icon.png" align="right" />
 
-# Progetto-OO/BD-2021-2022
+
+# Progetto-OO/BD-2021-2022 <img src="icon.png" align="right" />
+
 #### "Object-Oriention": **_Progettazione e sviluppo di un applicativo in Java dotato di GUI per l'E-Learning_**
 #### "Basi di dati":     **_Progettazione e sviluppo di una Base di Dati Relazionale per l'E-Learning che consenta di gestire Test basati su Quiz_**
 
