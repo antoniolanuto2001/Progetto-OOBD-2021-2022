@@ -1,10 +1,10 @@
 
-# Files di progetto
+# 📂 Files di progetto
 In questo README è presente una breve descrizione dei vari files riguardanti la parte di Basi di Dati.
 
 
 
-## *Directory: "Documentazione"*
+## 🗎 *Directory: "Documentazione"*
 - File .pdf prodotto in LATEX contenente una descrizione dettagliata di tutto il progetto, ed in particolare:
 
 1️⃣ Descrizione e Analisi del Progetto
@@ -21,7 +21,7 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 
 
 
-## *Directory: "SQL"*
+## *Directory: "SQL"* <img src="icons8-postgreesql-48.png" align="left"/>  
 - File .sql contenente:
 
 1️⃣ La creazione di tutti i Domini utilizzati
