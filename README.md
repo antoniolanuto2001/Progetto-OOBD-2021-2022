@@ -1,8 +1,8 @@
 
 # 🔖 Progetto-OO/BD-2021-2022  <img src="icon.png" align="right"/> 
-#### ◽ "Object-Oriention": **_Progettazione e sviluppo di un applicativo in Java dotato di GUI per l'E-Learning_** 
+#### ↬ "Object-Oriention": **_Progettazione e sviluppo di un applicativo in Java dotato di GUI per l'E-Learning_** 
 
-#### ◽ "Basi Di Dati": **_Progettazione e sviluppo di una Base di Dati Relazionale per l'E-Learning che consenta di gestire Test basati su Quiz_** 
+#### ↬ "Basi Di Dati": **_Progettazione e sviluppo di una Base di Dati Relazionale per l'E-Learning che consenta di gestire Test basati su Quiz_** 
 
 ## 📑 *Organizzazione e Scelte Progettuali*
 - La condivisione del materiale avverrà tramite GitHub
