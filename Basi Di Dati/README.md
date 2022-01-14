@@ -6,7 +6,7 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 ---
 
 
-## *Directory: "Documentazione"*.  <img src="icons8-documenti-48.png" align="left"/>    
+## *Directory: "Documentazione"*  <img src="icons8-documenti-48.png" align="left"/>    
 - File .pdf prodotto in LATEX contenente una descrizione dettagliata di tutto il progetto, ed in particolare:
 
 📄 Descrizione e Analisi del Progetto
