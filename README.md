@@ -16,7 +16,7 @@
 - Antonio Lanuto : N86003762
 - Erasmo Prosciutto : N86003546
 
-### *Riferimenti*
+### *Contatti*
 an.lanuto@studenti.unina.it
 
 e.prosciutto@studenti.unina.it
