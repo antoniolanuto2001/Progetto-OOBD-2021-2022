@@ -5,7 +5,8 @@
 # 📂 Files di progetto
 In questo README è presente una breve descrizione dei vari files riguardanti la parte di Object Orientation.
 
-## 🗎 *Documentazione*
+
+## 🗎 *Directory: Documentazione*
 - File .pdf prodotto in LATEX contenente una descrizione dettagliata di tutto il progetto, ed in particolare:
 
 1️⃣ Descrizione e Analisi del Progetto 
@@ -21,7 +22,7 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 - File .png del Sequence Diagram di un primo metodo
 - File .png del Sequence Diagram di un secondo metodo
 
-## ⚒ *E-LearningGUI*
+## ⚒ *Directory: E-LearningGUI*
 ↓ Codice sorgente suddiviso in packages:
 
 🗀  Controller
@@ -38,5 +39,5 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
  
 🗀   Images
 
-## 💻 *Eseguibile*
+## 💻 *Directory Eseguibile*
 - Applicativo eseguibile .jar
