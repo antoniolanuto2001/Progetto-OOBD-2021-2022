@@ -2,6 +2,7 @@
 # 📂 Files di progetto
 In questo README è presente una breve descrizione dei vari files riguardanti la parte di Basi di Dati.
 
+---
 
 
 ## *Directory: "Documentazione"*.  <img src="icons8-documenti-48.png" align="left"/>    
