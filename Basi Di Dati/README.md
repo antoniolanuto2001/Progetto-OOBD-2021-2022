@@ -7,13 +7,13 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 ## *Directory: "Documentazione"*.  <img src="icons8-documenti-48.png" align="left"/>    
 - File .pdf prodotto in LATEX contenente una descrizione dettagliata di tutto il progetto, ed in particolare:
 
-1️⃣ Descrizione e Analisi del Progetto
+📄 Descrizione e Analisi del Progetto
 
-2️⃣ Progettazione concettuale
+📄 Progettazione concettuale
 
-3️⃣ Schema Logico
+📄 Schema Logico
 
-4️⃣ Progettazione Fisica
+📄 Progettazione Fisica
 
 - File .png del Class Diagram non ristrutturato
 - File .png del Class Diagram ristrutturato
