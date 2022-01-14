@@ -12,8 +12,9 @@
 - Il DBMS si troverà su una macchina virtuale (VPS) con S.O. Ubuntu Linux
 
 ## ©️ *Contribuenti*
-- Antonio Lanuto : N86003762
-- Erasmo Prosciutto : N86003546
+👨‍💼  Antonio Lanuto : N86003762
+
+🙎‍♂️  Erasmo Prosciutto : N86003546
 
 ### 📬 *Contatti*
 @ an.lanuto@studenti.unina.it
