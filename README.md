@@ -6,7 +6,7 @@
 #### "Basi di dati":     **_Progettazione e sviluppo di una Base di Dati Relazionale per l'E-Learning che consenta di gestire Test basati su Quiz_**
 
 ## *Organizzazione e Scelte Progettuali*
-- La condivisione del materiale avverrà tramite questa
+- La condivisione del materiale avverrà tramite GitHub
 - L'ambiente di sviluppo per l'applicativo sarà Eclipse
 - Per la GUI dell'applicativo utilizzeremo Swing
 - Per la Base di Dati utilizzeremo il DBMS PostgreSQL
