@@ -6,6 +6,7 @@
 
 ## 📑 *Organizzazione e Scelte Progettuali*
 
+- Tutta la documentazione sarà prodotta in Latex
 - Per la fase di modellazione si utilizzerà l'applicativo StarUML (file .mdj)
 - La condivisione del materiale avverrà tramite GitHub
 - L'ambiente di sviluppo per l'applicativo sarà Eclipse
