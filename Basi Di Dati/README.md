@@ -1,3 +1,4 @@
+<img src="icons8-configurazione-dati-96.png" align="right"/>  
 
 # 📂 Files di progetto
 In questo README è presente una breve descrizione dei vari files riguardanti la parte di Basi di Dati.
