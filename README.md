@@ -1,10 +1,22 @@
 # Progetto-OO/BD-2021-2022
-#### PROGETTO "Object-Oriention": **_Progettazione e sviluppo di un applicativo in Java dotato di GUI per l'e-learning_**
-#### PROGETTO "Basi di dati":     **_Progettazione e sviluppo di una Base di Dati Relazionale per la gestione dei dati dell' applicativo_**
+#### "Object-Oriention": **_Progettazione e sviluppo di un applicativo in Java dotato di GUI per l'E-Learning_**
+#### "Basi di dati":     **_Progettazione e sviluppo di una Base di Dati Relazionale per l'E-Learning che consenta di gestire Test basati su Quiz_**
+
+## *Organizzazione e Scelte Progettuali*
+- La condivisione del materiale avverrà tramite questa
+- L'ambiente di sviluppo per l'applicativo sarà Eclipse
+- Per la GUI dell'applicativo utilizzeremo Swing
+- Per la Base di Dati utilizzeremo il DBMS PostgreSQL
+- Il DBMS si troverà su una macchina virtuale (VPS) con S.O. Ubuntu Linux
 
 ## *Contribuenti*
-- Antonio Lanuto /N86003762/ an.lanuto@studenti.unina.it
-- Erasmo Prosciutto /N86003546/ e.prosciutto@studenti.unina.it
+- Antonio Lanuto : N86003762
+- Erasmo Prosciutto : N86003546
+
+### *Riferimenti*
+an.lanuto@studenti.unina.it
+
+e.prosciutto@studenti.unina.it
 
 ## *Info*
 - Università degli Studi di Napoli: "Federico II" 
