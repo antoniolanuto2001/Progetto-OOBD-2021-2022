@@ -24,20 +24,20 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 ## *Directory: "SQL"* <img src="icons8-postgreesql-48.png" align="left"/>  
 - File .sql contenente:
 
-1️⃣ La creazione di tutti i Domini utilizzati
+📝 La creazione di tutti i Domini utilizzati
 
-2️⃣ La creazione di tutte le tabelle
+📝 La creazione di tutte le tabelle
 
-3️⃣ I vincoli di Primary Key
+📝 I vincoli di Primary Key
 
-4️⃣ I vincoli di Foreign Key
+📝 I vincoli di Foreign Key
 
-5️⃣ La creazione di tutte le Sequence
+📝 La creazione di tutte le Sequence
 
-6️⃣ I Triggers
+📝 I Triggers
 
-7️⃣ Le procedure in PL/PGSQL
+📝 Le procedure in PL/PGSQL
 
-8️⃣ Le funzioni in PL/PGSQL
+📝 Le funzioni in PL/PGSQL
 
-9️⃣ Le Insert per la popolazione del DB
+📝 Le Insert per la popolazione del DB
