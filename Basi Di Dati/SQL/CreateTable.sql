@@ -322,7 +322,7 @@ punteggioOttenutoNuovo int;
 
 BEGIN
 	SELECT * FROM valutazionerispostamultipla
-	INTO valutazioneMultipla WHERE idvalutazionemultipla=ValidDaFunction;
+	INTO valutazioneMultipla WHERE idvalutazionemultipla=ValidDaFunction;--Recupera T-Upla con valutazione risposta multipla Corretta!
 	
 	idquizmDaquery:=valutazioneMultipla.idquizm;
 	 
@@ -330,16 +330,18 @@ BEGIN
 	SELECT * FROM quizmultipla INTO quizMultiplo WHERE idquizm=idquizmDaquery;
 	
 	letteraCorrettaDaquery:=quizMultiplo.letteracorretta;
+	--Check Della Risposta
 	IF letteraCorrettaDaquery = valutazioneMultipla.letterainserita THEN
 	 	punteggioOttenutoNuovo:=quizmultiplo.punteggiorispostacorretta; 	
 		
 	ELSE
 	punteggioOttenutoNuovo:=quizmultiplo.punteggiorispostasbagliato; 
 	END IF;
+	--Update Del Punteggio
 	UPDATE valutazionerispostamultipla
 	set punteggioottenuto=punteggioOttenutoNuovo
 	WHERE idvalutazionemultipla=ValidDaFunction; 
-
+	--Update Del RisultatoTest
 	UPDATE risultatotest
 	SET punteggiototale=punteggiototale+punteggioOttenutoNuovo
 	WHERE idrisultatotest=valutazioneMultipla.idrisultatotest;
@@ -348,14 +350,14 @@ END;
 $CorreggiMultipla$ LANGUAGE plpgsql;
 --Fase 2
 -----Creo il trigger adetto al controllo del effettivo lancio della funzione --- 
-
 CREATE OR REPLACE FUNCTION TriggerCorreggiMultipla()
   RETURNS TRIGGER 
   AS
 $TriggerCorreggiMultipla$
 BEGIN
 	IF NEW.valutata=false THEN
-	PERFORM correggimultipla(NEW.idvalutazionemultipla);
+	PERFORM correggimultipla(NEW.idvalutazionemultipla);--Lancio Della Funzione
+	--Update T-Upla Valutazione Riposta Multipla
 	UPDATE valutazionerispostamultipla
 	SET valutata = true 
 	WHERE idvalutazionemultipla=NEW.idvalutazionemultipla;
@@ -377,17 +379,16 @@ EXECUTE PROCEDURE TriggerCorreggiMultipla();
 -----Creo Come prima cosa la funzione che aggiorna il punteggio del risultato del test --- 
 CREATE OR REPLACE FUNCTION AggiornaPunteggioAperta(ValidDaFunction valutazionerispostaaperta.idvalutazioneaperta%TYPE)
 RETURNS void 
-
 AS
 $AggiornaPunteggioAperta$
 DECLARE 
-valutazioneaperta valutazionerispostaaperta%ROWTYPE;
+valutazioneaperta valutazionerispostaaperta%ROWTYPE; 
 quizAperta quizaperta%ROWTYPE;
 idquizaDaquery quizaperta.idquiza%TYPE;
 punteggioOttenuto int;
 
 BEGIN
-	SELECT * FROM valutazionerispostaaperta
+	SELECT * FROM valutazionerispostaaperta --Recupera T-Upla con valutazione risposta Aperta Corretta!
 	INTO valutazioneaperta WHERE idvalutazioneaperta=ValidDaFunction;
 	
 	idquizaDaquery:=valutazioneaperta.idquiza;
@@ -395,13 +396,14 @@ BEGIN
 	
 	SELECT * FROM quizaperta INTO quizAperta WHERE idquiza=idquizaDaquery;
 	
-
+	--Check Del Punteggio
 	IF valutazioneaperta.PunteggioAssegnato<=quizAperta.PunteggioMassimo AND valutazioneaperta.PunteggioAssegnato>=quizAperta.PunteggioMinimo   THEN
 	 	punteggioOttenuto:=valutazioneaperta.PunteggioAssegnato; 	
 		
 	ELSE
-	raise notice 'Errore nell assegnazione del codice '; 
+	raise notice 'Errore nell assegnazione del codice '; --Debug Casomai Error
 	END IF;
+	--Update Risultato Test
 	UPDATE risultatotest
 	SET punteggiototale=punteggiototale+punteggioOttenuto
 	WHERE idrisultatotest=valutazioneaperta.idrisultatotest;
@@ -417,7 +419,7 @@ CREATE OR REPLACE FUNCTION TriggerCorreggiAperta()
 $TriggerCorreggiAperta$
 BEGIN
 	IF NEW.valutata=true THEN
-	PERFORM AggiornaPunteggioAperta(NEW.idvalutazioneaperta);
+	PERFORM AggiornaPunteggioAperta(NEW.idvalutazioneaperta);--Lancio Della Funzione
 	END IF;
 	RETURN NEW;
 END;
@@ -430,6 +432,7 @@ on valutazionerispostaaperta
 FOR EACH ROW 
 EXECUTE PROCEDURE TriggerCorreggiAperta();
 ---------------------------------Funzione Di Aggiornamento Automatico dei Quiz --------------------------------
+--Fase 1 Crea Funzione NumeroQuiz
 CREATE OR REPLACE FUNCTION aggiornaNumeroQuiz()
   RETURNS TRIGGER 
 AS
@@ -441,6 +444,7 @@ BEGIN
 	RETURN NEW;
 END;
 $TriggerAggiungiQuiz$   LANGUAGE PLPGSQL;
+--Fase 2 Lancia Il trigger Per Multipla e Aperta
 --Trigger Aperta
 create trigger AggiugniQuizApertaLanciatore
 after INSERT
@@ -536,13 +540,14 @@ INSERT INTO test VALUES
 (default,'EVOLUTION OF FINANCIAL MARKETS',120,4,'06/12/2022','D4231'),
 (default,'FONDAMENTI DI AGRONOMIA',100,3,'06/13/2022','D2422'),
 (default,'LABORATORIO DI COLTIVAZIONE DELLE PIANTE',60,3,'06/10/2022','D2422'),
-(default,'PERFORMANCE MANAGEMENT SYSTEMS',120,5,'06/24/2022','D6242'),
+(default,'PERFORMANCE MANAGEMENT SYSTEMS',120,5,'06/24/2022','D6242');
 
 /*
 ---------------------------------
-	!INSERT->TABLE->INSEGNAMENTO!
+   !INSERT->TABLE->INSEGNAMENTO!
 ---------------------------------
 */
+
 INSERT INTO insegnamento VALUES
 ('24583','Citologia ed Istologia e Laboratorio','D9934'),
 ('31442','Endocrinologia applicata alle sostanze Stupefacenti','D9934'),
@@ -872,6 +877,6 @@ INSERT INTO Gestione VALUES
 (default,'MODIFICA','2022-01-13 10:21:36','D2732',5),
 (default,'MODIFICA','2022-01-10 17:24:16','D2732',6),
 (default,'MODIFICA','2022-02-05 09:13:11','D4231',16),
-(default,'MODIFICA','2022-02-03 09:40:48','D4231',17),
+(default,'MODIFICA','2022-02-03 09:40:48','D4231',17);
 
 /* ----------------------------------- */
