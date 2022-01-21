@@ -5,15 +5,22 @@
         !Creazione Domini!
     ---------------------------
 */
+--Vincolo Di Dominio : EmailCheckUnina
 CREATE DOMAIN EMAIL_DOMINIO AS VARCHAR(60)
 	CHECK ( VALUE LIKE '%@studenti.unina.it' OR VALUE LIKE '%@unina.it' );
-
+--Vincolo Di Dominio : PasswordDomainCheck
 CREATE DOMAIN PASSWORD_DOMINIO AS VARCHAR(40)
 	CHECK (VALUE ~ '^.*(?=.*[@!#$^*%&])(?=.*[0-9])(?=.*[a-zA-Z]).*$'
 		AND VALUE LIKE '________%');
-
+--Vincolo Di Dominio : UrlDocenteUnina
 CREATE DOMAIN URL AS VARCHAR(60)
 	CHECK ( VALUE LIKE 'https://www.docenti.unina.it/%' );
+--Vincolo Di Dominio : GeneraliCorrette
+CREATE DOMAIN GENERALI AS VARCHAR(60)
+	CHECK ( VALUE <> '' AND VALUE NOT SIMILAR TO '%[0-9]+%' AND VALUE NOT SIMILAR TO '%[@!#$^*%&]+%'  );
+--Vincolo Di Dominio : CodFiscaleCheck
+CREATE DOMAIN CODICEFISCALE AS VARCHAR(16)
+	CHECK (VALUE <> '' AND VALUE ~ '^.*(?=.*[0-9])(?=.*[A-Z]).*$' AND VALUE NOT SIMILAR TO '%[a-z]+%' AND VALUE NOT SIMILAR TO '%[@!#$^*%&]+%');
 /*
     ---------------------------
         !Creazione Tabelle!
@@ -44,10 +51,10 @@ CREATE TABLE DIPARTIMENTO
 CREATE TABLE STUDENTE
 (
 	Matricola VARCHAR(9),
-	Nome VARCHAR(60),
-	Cognome VARCHAR(60),
+	Nome GENERALI,
+	Cognome GENERALI,
 	DatadiNascita DATE,
-	CodFiscale VARCHAR(16),
+	CodFiscale CODICEFISCALE,
 	Sesso VARCHAR(1),
 	CDL VARCHAR(50),
 	Email EMAIL_DOMINIO,
@@ -65,10 +72,10 @@ CREATE TABLE STUDENTE
 CREATE TABLE DOCENTE
 (
 	IdDocente VARCHAR(5),
-	Nome VARCHAR(60),
-	Cognome VARCHAR(60),
+	Nome GENERALI,
+	Cognome GENERALI,
 	DataDiNascita DATE,
-	CodFiscale VARCHAR(16),
+	CodFiscale CODICEFISCALE,
 	Sesso VARCHAR(1),
 	Telefono INT,
 	URL URL,
@@ -877,8 +884,10 @@ INSERT INTO Gestione VALUES
 (default,'MODIFICA','2022-02-03 09:40:48','D4231',17);
 
 
+
 CREATE USER silvio_barra PASSWORD 'Basedidati01!'; -- Creazione Nuovo Utente 
 GRANT ALL ON ALL TABLES IN SCHEMA public TO Silvio_Barra; --Assegnazione Privileggi
+
 /* ----------------------------------- */
 
 
