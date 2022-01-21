@@ -429,7 +429,9 @@ AFTER UPDATE
 ON valutazionerispostaaperta
 FOR EACH ROW 
 EXECUTE PROCEDURE TriggerCorreggiAperta();
+
 ---------------------------------Funzione Di Aggiornamento Automatico dei Quiz --------------------------------
+
 CREATE OR REPLACE FUNCTION aggiornaNumeroQuiz()
   RETURNS TRIGGER 
 AS
