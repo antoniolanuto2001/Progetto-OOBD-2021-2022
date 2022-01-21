@@ -55,6 +55,6 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 ```
 Username : silvio_barra
 Password : Basedidati01!
-host name / address / port : verra comunicati per motivi di sicurezza in privato via Email📩
+host name / address / port : verranno comunicati per motivi di sicurezza in privato via Email📩
 
 ```
