@@ -6,14 +6,14 @@
     ---------------------------
 */
 CREATE DOMAIN EMAIL_DOMINIO AS VARCHAR(60)
-	CHECK ( VALUE LIKE '_%@_%._%' );
+	CHECK ( VALUE LIKE '%@studenti.unina.it' OR VALUE LIKE '%@unina.it' );
 
 CREATE DOMAIN PASSWORD_DOMINIO AS VARCHAR(40)
 	CHECK (VALUE ~ '^.*(?=.*[@!#$^*%&])(?=.*[0-9])(?=.*[a-zA-Z]).*$'
 		AND VALUE LIKE '________%');
 
 CREATE DOMAIN URL AS VARCHAR(60)
-	CHECK ( VALUE LIKE 'https://www.%' );
+	CHECK ( VALUE LIKE 'https://www.docenti.unina.it/%' );
 /*
     ---------------------------
         !Creazione Tabelle!
@@ -30,7 +30,7 @@ CREATE TABLE DIPARTIMENTO
 	Nome VARCHAR(120),
 	Direttore VARCHAR(40),
 	Citta VARCHAR(40),
-	provincia VARCHAR(40),
+	Provincia VARCHAR(40),
 	Via VARCHAR(40),
 	Cap INT,
 	PRIMARY KEY (CodiceStruttura)
@@ -50,7 +50,7 @@ CREATE TABLE STUDENTE
 	CodFiscale VARCHAR(16),
 	Sesso VARCHAR(1),
 	CDL VARCHAR(50),
-	email EMAIL_DOMINIO,
+	Email EMAIL_DOMINIO,
 	password PASSWORD_DOMINIO,
 	Dipartimento VARCHAR(5),
 
@@ -73,7 +73,7 @@ CREATE TABLE DOCENTE
 	Telefono INT,
 	URL URL,
 	Email EMAIL_DOMINIO,
-	password PASSWORD_DOMINIO,
+	Password PASSWORD_DOMINIO,
 	Dipartimento VARCHAR(5),
 
 	PRIMARY KEY(IdDocente),
@@ -87,7 +87,7 @@ CREATE TABLE DOCENTE
 CREATE TABLE INSEGNAMENTO
 (
 	IdInsegnamento VARCHAR(5),
-	denominazione VARCHAR(80),
+	Denominazione VARCHAR(80),
 	IdDocente VARCHAR(5),
 
 	PRIMARY KEY(IdInsegnamento),
@@ -152,10 +152,10 @@ CREATE TABLE QUIZAPERTA
 	MaXLunghezzaRisposta INT,
 	PunteggioMinimo INT,
 	PunteggioMassimo INT,
-	IdtestRiferimento INT,
+	IdTestRiferimento INT,
 
 	PRIMARY KEY(IdQuizA),
-	FOREIGN KEY(IdtestRiferimento) REFERENCES  TEST(IdTest)
+	FOREIGN KEY(IdTestRiferimento) REFERENCES  TEST(IdTest)
 	ON DELETE CASCADE
 );
 CREATE SEQUENCE IdQuizSeq
@@ -175,11 +175,11 @@ CREATE TABLE QUIZMULTIPLA
 	LetteraCorretta VARCHAR(1),
 	Domanda VARCHAR(800),
 	PunteggioRispostaCorretta INT,
-	PunteggioRispostaSbagliato INT,
-	IdtestRiferimento INT,
+	PunteggioRispostaSbagliata INT,
+	IdTestRiferimento INT,
 	
 	PRIMARY KEY(IdQuizM),
-	FOREIGN KEY(IdtestRiferimento) REFERENCES TEST(IdTest)
+	FOREIGN KEY(IdTestRiferimento) REFERENCES TEST(IdTest)
 	ON DELETE CASCADE
 );
 CREATE SEQUENCE IdQuizMSeq
@@ -238,7 +238,7 @@ CREATE TABLE VALUTAZIONERISPOSTAAPERTA
 	IdValutazioneAperta SERIAL,
 	RispostaInserita VARCHAR(2000),
 	PunteggioAssegnato INT,
-	VALUTATA BOOLEAN,
+	Valutata BOOLEAN,
 	Matricola VARCHAR(9),
 	IdDocente VARCHAR(5),
 	IdRisultatoTest INT,
@@ -270,7 +270,7 @@ CREATE TABLE VALUTAZIONERISPOSTAMULTIPLA
 	LetteraInserita VARCHAR(1),
 	Matricola VARCHAR(9),
 	PunteggioOttenuto INT,
-	VALUTATA BOOLEAN,
+	Valutata BOOLEAN,
 	IdRisultatoTest INT,
 	IdQuizM INT,
 
@@ -322,7 +322,7 @@ punteggioOttenutoNuovo int;
 
 BEGIN
 	SELECT * FROM valutazionerispostamultipla
-	INTO valutazioneMultipla WHERE idvalutazionemultipla=ValidDaFunction;--Recupera T-Upla con valutazione risposta multipla Corretta!
+	INTO valutazioneMultipla WHERE idvalutazionemultipla=ValidDaFunction;
 	
 	idquizmDaquery:=valutazioneMultipla.idquizm;
 	 
@@ -330,18 +330,16 @@ BEGIN
 	SELECT * FROM quizmultipla INTO quizMultiplo WHERE idquizm=idquizmDaquery;
 	
 	letteraCorrettaDaquery:=quizMultiplo.letteracorretta;
-	--Check Della Risposta
 	IF letteraCorrettaDaquery = valutazioneMultipla.letterainserita THEN
 	 	punteggioOttenutoNuovo:=quizmultiplo.punteggiorispostacorretta; 	
 		
 	ELSE
 	punteggioOttenutoNuovo:=quizmultiplo.punteggiorispostasbagliato; 
 	END IF;
-	--Update Del Punteggio
 	UPDATE valutazionerispostamultipla
-	set punteggioottenuto=punteggioOttenutoNuovo
+	SET punteggioottenuto=punteggioOttenutoNuovo
 	WHERE idvalutazionemultipla=ValidDaFunction; 
-	--Update Del RisultatoTest
+
 	UPDATE risultatotest
 	SET punteggiototale=punteggiototale+punteggioOttenutoNuovo
 	WHERE idrisultatotest=valutazioneMultipla.idrisultatotest;
@@ -349,15 +347,15 @@ BEGIN
 END;
 $CorreggiMultipla$ LANGUAGE plpgsql;
 --Fase 2
------Creo il trigger adetto al controllo del effettivo lancio della funzione --- 
+-----Creo il trigger addetto al controllo dell effettivo lancio della funzione --- 
+
 CREATE OR REPLACE FUNCTION TriggerCorreggiMultipla()
   RETURNS TRIGGER 
   AS
 $TriggerCorreggiMultipla$
 BEGIN
 	IF NEW.valutata=false THEN
-	PERFORM correggimultipla(NEW.idvalutazionemultipla);--Lancio Della Funzione
-	--Update T-Upla Valutazione Riposta Multipla
+	PERFORM correggimultipla(NEW.idvalutazionemultipla);
 	UPDATE valutazionerispostamultipla
 	SET valutata = true 
 	WHERE idvalutazionemultipla=NEW.idvalutazionemultipla;
@@ -368,8 +366,8 @@ $TriggerCorreggiMultipla$ LANGUAGE plpgsql;
 --Fase 3
 -----Creo il trigger vero e proprio lanciatore 
 CREATE TRIGGER correggiMultipleTriggerLanciatore
-after insert 
-on valutazionerispostamultipla
+AFTER INSERT
+ON valutazionerispostamultipla
 FOR EACH ROW 
 EXECUTE PROCEDURE TriggerCorreggiMultipla();
 
@@ -379,16 +377,17 @@ EXECUTE PROCEDURE TriggerCorreggiMultipla();
 -----Creo Come prima cosa la funzione che aggiorna il punteggio del risultato del test --- 
 CREATE OR REPLACE FUNCTION AggiornaPunteggioAperta(ValidDaFunction valutazionerispostaaperta.idvalutazioneaperta%TYPE)
 RETURNS void 
+
 AS
 $AggiornaPunteggioAperta$
 DECLARE 
-valutazioneaperta valutazionerispostaaperta%ROWTYPE; 
+valutazioneaperta valutazionerispostaaperta%ROWTYPE;
 quizAperta quizaperta%ROWTYPE;
 idquizaDaquery quizaperta.idquiza%TYPE;
 punteggioOttenuto int;
 
 BEGIN
-	SELECT * FROM valutazionerispostaaperta --Recupera T-Upla con valutazione risposta Aperta Corretta!
+	SELECT * FROM valutazionerispostaaperta
 	INTO valutazioneaperta WHERE idvalutazioneaperta=ValidDaFunction;
 	
 	idquizaDaquery:=valutazioneaperta.idquiza;
@@ -396,14 +395,13 @@ BEGIN
 	
 	SELECT * FROM quizaperta INTO quizAperta WHERE idquiza=idquizaDaquery;
 	
-	--Check Del Punteggio
+
 	IF valutazioneaperta.PunteggioAssegnato<=quizAperta.PunteggioMassimo AND valutazioneaperta.PunteggioAssegnato>=quizAperta.PunteggioMinimo   THEN
 	 	punteggioOttenuto:=valutazioneaperta.PunteggioAssegnato; 	
 		
 	ELSE
-	raise notice 'Errore nell assegnazione del codice '; --Debug Casomai Error
+	raise notice 'Errore nell assegnazione del codice '; 
 	END IF;
-	--Update Risultato Test
 	UPDATE risultatotest
 	SET punteggiototale=punteggiototale+punteggioOttenuto
 	WHERE idrisultatotest=valutazioneaperta.idrisultatotest;
@@ -411,7 +409,7 @@ BEGIN
 END;
 $AggiornaPunteggioAperta$ LANGUAGE plpgsql;
 --Fase 2
------Creo il trigger adetto al controllo del effettivo lancio della funzione 
+-----Creo il trigger addetto al controllo del effettivo lancio della funzione 
 CREATE OR REPLACE FUNCTION TriggerCorreggiAperta()
   RETURNS TRIGGER 
 
@@ -419,20 +417,19 @@ CREATE OR REPLACE FUNCTION TriggerCorreggiAperta()
 $TriggerCorreggiAperta$
 BEGIN
 	IF NEW.valutata=true THEN
-	PERFORM AggiornaPunteggioAperta(NEW.idvalutazioneaperta);--Lancio Della Funzione
+	PERFORM AggiornaPunteggioAperta(NEW.idvalutazioneaperta);
 	END IF;
 	RETURN NEW;
 END;
 $TriggerCorreggiAperta$   LANGUAGE PLPGSQL;
 --Fase 3
 -----Creo il trigger vero e proprio lanciatore ---
-create trigger CorreggiApertaLanciatore
-after UPDATE
-on valutazionerispostaaperta
+CREATE trigger CorreggiApertaLanciatore
+AFTER UPDATE
+ON valutazionerispostaaperta
 FOR EACH ROW 
 EXECUTE PROCEDURE TriggerCorreggiAperta();
 ---------------------------------Funzione Di Aggiornamento Automatico dei Quiz --------------------------------
---Fase 1 Crea Funzione NumeroQuiz
 CREATE OR REPLACE FUNCTION aggiornaNumeroQuiz()
   RETURNS TRIGGER 
 AS
@@ -444,17 +441,16 @@ BEGIN
 	RETURN NEW;
 END;
 $TriggerAggiungiQuiz$   LANGUAGE PLPGSQL;
---Fase 2 Lancia Il trigger Per Multipla e Aperta
 --Trigger Aperta
-create trigger AggiugniQuizApertaLanciatore
-after INSERT
-on quizaperta
+CREATE trigger AggiugniQuizApertaLanciatore
+AFTER INSERT
+ON quizaperta
 FOR EACH ROW 
 EXECUTE PROCEDURE aggiornaNumeroQuiz();
 --Trigger Multipla
-create trigger AggiugniQuizApertaLanciatore
-after INSERT
-on quizmultipla
+CREATE trigger AggiugniQuizApertaLanciatore
+AFTER INSERT
+ON quizmultipla
 FOR EACH ROW 
 EXECUTE PROCEDURE aggiornaNumeroQuiz();
 
@@ -544,10 +540,9 @@ INSERT INTO test VALUES
 
 /*
 ---------------------------------
-   !INSERT->TABLE->INSEGNAMENTO!
+	!INSERT->TABLE->INSEGNAMENTO!
 ---------------------------------
 */
-
 INSERT INTO insegnamento VALUES
 ('24583','Citologia ed Istologia e Laboratorio','D9934'),
 ('31442','Endocrinologia applicata alle sostanze Stupefacenti','D9934'),
@@ -880,3 +875,15 @@ INSERT INTO Gestione VALUES
 (default,'MODIFICA','2022-02-03 09:40:48','D4231',17);
 
 /* ----------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
