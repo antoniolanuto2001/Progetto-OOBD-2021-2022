@@ -51,7 +51,7 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 - [Dalla riga 459 alla riga 879 viene mostrata la *popolazione* del database.](https://github.com/antoniolanuto2001/Progetto-OOBD-2021-2022/blob/main/Basi%20Di%20Dati/SQL/CreateTable.sql#L459)
 - [Dalla riga 880 alla riga 881 viene creato un'User specifico per il prof](https://github.com/antoniolanuto2001/Progetto-OOBD-2021-2022/blob/main/Basi%20Di%20Dati/SQL/CreateTable.sql#L879)
 
-🗺## Istruzioni per l'utilizzo del Database 🧩📲🕹
+## 📩 Istruzioni per l'utilizzo del Database 🧩📲🕹
 ```
 Username : silvio_barra
 Password : Basedidati01!
