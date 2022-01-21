@@ -876,16 +876,9 @@ INSERT INTO Gestione VALUES
 (default,'MODIFICA','2022-02-05 09:13:11','D4231',16),
 (default,'MODIFICA','2022-02-03 09:40:48','D4231',17);
 
+
+CREATE USER silvio_barra PASSWORD 'Basedidati01!'; -- Creazione Nuovo Utente 
+GRANT ALL ON ALL TABLES IN SCHEMA public TO Silvio_Barra; --Assegnazione Privileggi
 /* ----------------------------------- */
-
-
-
-
-
-
-
-
-
-
 
 
