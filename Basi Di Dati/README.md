@@ -44,7 +44,7 @@ In questo README è presente una breve descrizione dei vari files riguardanti la
 
 📝 Le Insert per la popolazione del DB
 
-## 🧩 Indicizzazione per il file *SQL*
+### 🧩 Indicizzazione per il file *SQL*
 - [Dalla riga 8 alla riga 17 viene mostrata la creazione dei *domini*;](https://github.com/antoniolanuto2001/Progetto-OOBD-2021-2022/blob/main/Basi%20Di%20Dati/SQL/CreateTable.sql#L8)
 - [Dalla riga 22 alla riga 289 viene mostrata la creazione delle *tabelle*;](https://github.com/antoniolanuto2001/Progetto-OOBD-2021-2022/blob/main/Basi%20Di%20Dati/SQL/CreateTable.sql#L22)
 - [Dalla riga 290 alla riga 457 vengono mostrati i *trigger*, le *procedure* e  i *vincoli* implementati;](https://github.com/antoniolanuto2001/Progetto-OOBD-2021-2022/blob/main/Basi%20Di%20Dati/SQL/CreateTable.sql#L294)
