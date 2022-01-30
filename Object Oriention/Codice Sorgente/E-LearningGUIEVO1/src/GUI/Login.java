@@ -77,17 +77,31 @@ public class Login extends JFrame {
 		frame.setIconImage(logo.getImage());
 		Color CelesteSchermata = Color.decode("#90caf9");
 		Color GrigioApple = Color.decode("#fbfbfd");
+		ImageIcon IconLogin= new ImageIcon(this.getClass().getResource("/images/ImmagineLogin.png"));
+		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/images/ImagePrincipal2.png"));
 		JPanel LoginLeft = new JPanel();
-		LoginLeft.setBorder(new EmptyBorder(1, 1, 1, 1));
+		LoginLeft.setBorder(new LineBorder(new Color(0, 0, 0)));
 		LoginLeft.setBackground(Color.WHITE);
-		LoginLeft.setBounds(0, 0, 453, 761);
+		LoginLeft.setBounds(0, 0, 522, 761);
 		frame.getContentPane().add(LoginLeft);
+		
 		LoginLeft.setLayout(null);
+		
+		JLabel IconaLogin = new JLabel("");
+		IconaLogin.setBounds(0, 0, 524, 759);
+		LoginLeft.add(IconaLogin);
+		JPanel LoginRight = new JPanel();
+		LoginRight.setBorder(new LineBorder(new Color(0, 0, 0)));
+		LoginRight.setBackground(Color.WHITE);
+		LoginRight.setBounds(523, 0, 544, 761);
+		frame.getContentPane().add(LoginRight);
+		IconaLogin.setIcon(IconLogin);
+		LoginRight.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(GrigioApple);
-		panel_3.setBounds(37, 51, 408, 271);
-		LoginLeft.add(panel_3);
+		panel_3.setBounds(74, 48, 408, 271);
+		LoginRight.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel BenvenutoLogin = new JLabel("Login");
@@ -119,8 +133,8 @@ public class Login extends JFrame {
 		panel_3_1.setForeground(new Color(0, 0, 0));
 		panel_3_1.setBackground(GrigioApple);
 		panel_3_1.setLayout(null);
-		panel_3_1.setBounds(37, 321, 408, 385);
-		LoginLeft.add(panel_3_1);
+		panel_3_1.setBounds(74, 318, 408, 385);
+		LoginRight.add(panel_3_1);
 		
 		
 		
@@ -189,20 +203,8 @@ public class Login extends JFrame {
 		passwordField.setBounds(38, 173, 332, 28);
 		panel_3_1.add(passwordField);
 		
-		JPanel LoginRight = new JPanel();
-		LoginRight.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		LoginRight.setBackground(new Color(102, 0, 255));
-		LoginRight.setBounds(452, 0, 612, 761);
-		frame.getContentPane().add(LoginRight);
-		LoginRight.setLayout(null);
 		
-		JLabel ImmagineLabel = new JLabel("");
-		ImageIcon IconLogin= new ImageIcon(this.getClass().getResource("/images/SchermataLogin.png"));
-		ImmagineLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		ImmagineLabel.setBounds(0, 0, 612, 761);
-		ImmagineLabel.setIcon(IconLogin);
-		LoginRight.add(ImmagineLabel);
-		ImageIcon imgAccopuIcon2 = new ImageIcon(this.getClass().getResource("/images/ImagePrincipal2.png"));
+	
 		JButton ButtonLogin = new JButton("Sign in");
 		
 		ButtonLogin.setBackground(CelesteSchermata);
